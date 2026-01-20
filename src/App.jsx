@@ -29,10 +29,7 @@ const App = () => {
           path: "products",
           element: <Products />,
         },
-        {
-          path: "wishlist",
-          element: <Products />,
-        },
+        
         {
           path: "wishlist",
           element: <Wishlist />,
