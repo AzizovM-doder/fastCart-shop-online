@@ -58,7 +58,7 @@ export default function AutoSwiper() {
               </button>
             </aside>
             <img
-              className="w-40 lg:max-w-[50%] lg:p-5"
+              className="w-40 pt-5 lg:max-w-[50%] lg:p-5"
               src={iphone}
               alt="iPhone"
             />
@@ -68,14 +68,14 @@ export default function AutoSwiper() {
         <SwiperSlide style={{ background: "black" }}>
           <div className="w-full flex p-5 items-center text-start flex-col-reverse lg:flex-row lg:justify-between">
             <img
-              className="w-44 lg:max-w-[45%] lg:p-5"
+              className="w-44 pt-10 lg:max-w-[45%] lg:p-5"
               src={watch}
               alt="Apple Watch"
             />
             <aside className="flex flex-col pl-5 gap-5">
               <div className="text-white text-3xl flex items-center gap-2">
                 <img
-                  className="invert"
+                  className="invert "
                   style={{
                     width: "40px",
                     height: "40px",
@@ -124,7 +124,7 @@ export default function AutoSwiper() {
               </button>
             </aside>
             <img
-              className="w-36 lg:max-w-[40%] lg:p-5"
+              className="w-36 lg:max-w-[40%] pt-10 lg:p-5"
               src={airpods}
               alt="AirPods"
             />
