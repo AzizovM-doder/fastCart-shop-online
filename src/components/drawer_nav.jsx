@@ -19,6 +19,7 @@ import {
   Heart,
   LucideShoppingCart,
   User,
+  LogIn,
 } from "lucide-react";
 import fastCartLogo from "../../public/fastCartLogo.png";
 
@@ -96,6 +97,17 @@ const Drawer_nav = () => {
                 >
                   <UserPlus size={20} />
                   <span>Sign Up</span>
+                </NavLink>
+              </DrawerClose>
+
+              <DrawerClose asChild>
+                <NavLink
+                  to="login"
+                    className={({ isActive }) => (isActive ? "bg-gray-400 flex items-center gap-3 rounded-md px-3 py-2 " : "flex items-center gap-3 rounded-md px-3 py-2 ")}
+                
+                >
+                  <LogIn size={20} />
+                  <span>Login</span>
                 </NavLink>
               </DrawerClose>
 

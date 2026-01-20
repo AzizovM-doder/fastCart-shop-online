@@ -77,6 +77,14 @@ const Nav = () => {
           >
             Sign Up
           </NavLink>
+          <NavLink
+            className={({ isActive }) =>
+              isActive ? "border-b-[#B3B3B3]" : "border-b-[#00000000]"
+            }
+            to={"login"}
+          >
+            Log in
+          </NavLink>
         </ul>
         <div className="hidden lg:flex  items-center gap-10">
           <ButtonGroup>
