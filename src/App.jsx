@@ -17,7 +17,7 @@ import Error from "./pages/error/error";
 const App = () => {
   const router = createBrowserRouter([
     {
-      errorElement: <Error />,
+      // errorElement: <Error />,
       path: "/",
       element: <Layout />,
       children: [
