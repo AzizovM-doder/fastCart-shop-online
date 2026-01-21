@@ -3,6 +3,19 @@ import fastCartLogo from "../../public/fastCartLogo.png";
 import { Link, NavLink } from "react-router-dom";
 import { Heart, LucideShoppingCart, SearchIcon, User } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import {
+  CreditCardIcon,
+  LogOutIcon,
+  SettingsIcon,
+  UserIcon,
+} from "lucide-react";
 import { ButtonGroup } from "@/components/ui/button-group";
 import { Input } from "@/components/ui/input";
 import Drawer_nav from "./drawer_nav";
@@ -32,7 +45,7 @@ const Nav = () => {
               }
               to={"cart"}
             >
-              <LucideShoppingCart  width={20} />
+              <LucideShoppingCart width={20} />
             </NavLink>
             <NavLink
               className={({ isActive }) =>
@@ -40,7 +53,7 @@ const Nav = () => {
               }
               to={"account"}
             >
-              <User width={20}  />
+              <User width={20} />
             </NavLink>
           </div>
         </div>
@@ -110,14 +123,50 @@ const Nav = () => {
             >
               <LucideShoppingCart />
             </NavLink>
-            <NavLink
-              className={({ isActive }) =>
-                isActive ? "text-blue-500" : "text-black"
-              }
-              to={"account"}
-            >
-              <User />
-            </NavLink>
+          <DropdownMenu>
+  <DropdownMenuTrigger asChild>
+    <Button variant="outline">Open</Button>
+  </DropdownMenuTrigger>
+
+  <DropdownMenuContent className="w-48">
+    <DropdownMenuItem asChild>
+      <NavLink
+        to="account"
+        className={({ isActive }) =>
+          `flex items-center gap-2 w-full ${
+            isActive ? "text-blue-500" : "text-black"
+          }`
+        }
+      >
+        <User className="w-4 h-4" />
+        <span>Account</span>
+      </NavLink>
+    </DropdownMenuItem>
+
+    <DropdownMenuItem className="flex items-center gap-2">
+      <CreditCardIcon className="w-4 h-4" />
+      <span>Billing</span>
+    </DropdownMenuItem>
+
+    <DropdownMenuItem className="flex items-center gap-2">
+      <SettingsIcon className="w-4 h-4" />
+      <span>Settings</span>
+    </DropdownMenuItem>
+
+    <DropdownMenuSeparator />
+
+    <DropdownMenuItem
+      className="flex items-center gap-2 text-red-600 focus:text-red-600"
+      onClick={() => {
+        // handle logout here
+      }}
+    >
+      <LogOutIcon className="w-4 h-4" />
+      <span>Log out</span>
+    </DropdownMenuItem>
+  </DropdownMenuContent>
+</DropdownMenu>
+
           </div>
         </div>
       </div>
