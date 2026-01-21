@@ -10,7 +10,7 @@ import {
   Smartphone,
   Watch,
 } from "lucide-react";
-import React from "react";
+import React, { useEffect } from "react";
 import AutoSwiper from "../../components/swiper";
 import Card1 from "../../components/card1";
 import image from "../../images/joystick.png";
@@ -34,14 +34,28 @@ import image16 from "../../images/jacket.png";
 import MainBtn from "../../components/mainBtn";
 import { Link } from "react-router-dom";
 import Card2 from "../../components/card2";
+import { useDispatch, useSelector } from "react-redux";
+import {getBrands} from '../../api/apiBrandSlice.js'
 const Home = () => {
+  const {data} = useSelector((state) => state.brandSlice)
+  const dispatch = useDispatch()
+  useEffect(() =>{
+    dispatch(getBrands())
+  },)
   return (
     <main>
       <header>
         <section className="max-w-7xl m-auto lg:p-5 flex flex-col gap-5 lg:flex-row lg:justify-between">
           <aside className="flex flex-wrap gap-2 p-5 lg:p-0 lg:gap-5 lg:flex-nowrap lg:flex-col">
-            
-            <Link to={'/products'} className="flex items-center gap-3 px-3 py-2 bg-gray-200 rounded-sm lg:bg-[#00000000] lg:p-0">
+            {data?.map((e) =>{   
+              return (
+
+                <Link to={'/products'} className="flex items-center gap-3 px-3 py-2 bg-gray-200 rounded-sm lg:bg-[#00000000] lg:p-0">
+              {e.brandName} <ArrowRight />
+            </Link>
+            )   
+            })}
+            {/* <Link to={'/products'} className="flex items-center gap-3 px-3 py-2 bg-gray-200 rounded-sm lg:bg-[#00000000] lg:p-0">
               Woman’s Fashion <ArrowRight />
             </Link>
             <Link to={'/products'}  className="flex items-center gap-3 px-3 py-2 bg-gray-200 rounded-sm lg:bg-[#00000000] lg:p-0">
@@ -67,7 +81,7 @@ const Home = () => {
             </Link>
             <Link to={'/products'}  className="flex items-center gap-3 px-3 py-2 bg-gray-200 rounded-sm lg:bg-[#00000000] lg:p-0">
               Health & Beauty
-            </Link>
+            </Link> */}
           </aside>
           <hr className="h-full w-3" />
           <AutoSwiper />
