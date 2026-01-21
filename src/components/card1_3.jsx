@@ -8,9 +8,9 @@ import {
 } from "lucide-react";
 import { Link } from "react-router-dom";
 
-const Card1 = ({ data }) => {
+const Card1_3 = ({ data }) => {
   return (
-    <div className="flex gap-5 lg:gap-7 overflow-x-auto scroll-smooth [scrollbar-width:none] [-ms-overflow-style:none] no-scroll">
+    <div className="grid gap-5 lg:grid-cols-3">
       {data.map((e, i) => (
         <div key={i} className="flex flex-col min-w-full lg:min-w-72 p-3 lg:p-0 items-start gap-3">
           <div className="bg-gray-300 p-5 flex flex-col w-full  lg:w-72 h-72 items-center justify-between gap-5 rounded-sm">
@@ -50,4 +50,4 @@ const Card1 = ({ data }) => {
   );
 };
 
-export default Card1;
+export default Card1_3;

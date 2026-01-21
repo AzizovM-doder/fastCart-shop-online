@@ -2,6 +2,7 @@ import React from "react";
 import MainBtn from "./mainBtn";
 import { Checkbox, Rating } from "@mui/material";
 import { Trash2, Eye, ShoppingCartIcon } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const Card1_2 = ({ data }) => {
   return (
@@ -38,6 +39,15 @@ const Card1_2 = ({ data }) => {
                     },
                   }}
                 />
+                <Link to={'/details'}>
+                <Checkbox
+                  icon={<Eye style={{ color: "white" }} />}
+                  checkedIcon={<Eye style={{ color: "blue" }} />}
+                  sx={{
+                    padding: 0,
+                  }}
+                  />
+                  </Link>
               </div>
               <img
                 src={e.img}
