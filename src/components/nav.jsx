@@ -1,7 +1,14 @@
 import React from "react";
 import fastCartLogo from "../../public/fastCartLogo.png";
 import { Link, NavLink } from "react-router-dom";
-import { Heart, LucideShoppingCart, SearchIcon, User } from "lucide-react";
+import {
+  Heart,
+  LogOut,
+  LucideShoppingCart,
+  SearchIcon,
+  Settings,
+  User,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -10,6 +17,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+
 import {
   CreditCardIcon,
   LogOutIcon,
@@ -19,7 +27,19 @@ import {
 import { ButtonGroup } from "@/components/ui/button-group";
 import { Input } from "@/components/ui/input";
 import Drawer_nav from "./drawer_nav";
+import { Avatar, Divider, ListItemIcon, Menu, MenuItem } from "@mui/material";
+
 const Nav = () => {
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const open = Boolean(anchorEl);
+
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
   return (
     <nav className="backdrop-blur-lg fixed top-0 left-0 right-0 z-50 bg-white/30">
       <div className="max-w-7xl flex m-auto p-5 justify-between items-center">
@@ -57,6 +77,7 @@ const Nav = () => {
             </NavLink>
           </div>
         </div>
+
         <ul className="lg:flex gap-5 items-center hidden *:border-b-2 *:py-1">
           <NavLink
             className={({ isActive }) =>
@@ -99,14 +120,16 @@ const Nav = () => {
             Log in
           </NavLink>
         </ul>
-        <div className="hidden lg:flex  items-center gap-10">
+
+        <div className="hidden lg:flex items-center gap-10">
           <ButtonGroup>
             <Input className="w-60" placeholder="What are you looking for?" />
             <Button variant="outline" aria-label="Search">
               <SearchIcon />
             </Button>
           </ButtonGroup>
-          <div className="flex gap-5">
+
+          <div className="flex gap-5 items-center">
             <NavLink
               className={({ isActive }) =>
                 isActive ? "text-red-500" : "text-black"
@@ -123,50 +146,72 @@ const Nav = () => {
             >
               <LucideShoppingCart />
             </NavLink>
-          <DropdownMenu>
-  <DropdownMenuTrigger asChild>
-    <Button variant="outline">Open</Button>
-  </DropdownMenuTrigger>
+            <button
+              onClick={handleClick}
+              className="rounded-full p-1 hover:bg-gray-100 focus:outline-none"
+              aria-controls={open ? "account-menu" : undefined}
+              aria-haspopup="true"
+              aria-expanded={open ? "true" : undefined}
+            >
+              <User />
+            </button>
 
-  <DropdownMenuContent className="w-48">
-    <DropdownMenuItem asChild>
-      <NavLink
-        to="account"
-        className={({ isActive }) =>
-          `flex items-center gap-2 w-full ${
-            isActive ? "text-blue-500" : "text-black"
-          }`
-        }
-      >
-        <User className="w-4 h-4" />
-        <span>Account</span>
-      </NavLink>
-    </DropdownMenuItem>
-
-    <DropdownMenuItem className="flex items-center gap-2">
-      <CreditCardIcon className="w-4 h-4" />
-      <span>Billing</span>
-    </DropdownMenuItem>
-
-    <DropdownMenuItem className="flex items-center gap-2">
-      <SettingsIcon className="w-4 h-4" />
-      <span>Settings</span>
-    </DropdownMenuItem>
-
-    <DropdownMenuSeparator />
-
-    <DropdownMenuItem
-      className="flex items-center gap-2 text-red-600 focus:text-red-600"
-      onClick={() => {
-        // handle logout here
-      }}
-    >
-      <LogOutIcon className="w-4 h-4" />
-      <span>Log out</span>
-    </DropdownMenuItem>
-  </DropdownMenuContent>
-</DropdownMenu>
-
+            <Menu
+              anchorEl={anchorEl}
+              id="account-menu"
+              open={open}
+              onClose={handleClose}
+              onClick={handleClose}
+              slotProps={{
+                paper: {
+                  elevation: 0,
+                  sx: {
+                    overflow: "visible",
+                    filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
+                    mt: 1.5,
+                    "& .MuiAvatar-root": {
+                      width: 32,
+                      height: 32,
+                      ml: -0.5,
+                      mr: 1,
+                    },
+                    "&::before": {
+                      content: '""',
+                      display: "block",
+                      position: "absolute",
+                      top: 0,
+                      right: 14,
+                      width: 10,
+                      height: 10,
+                      bgcolor: "background.paper",
+                      transform: "translateY(-50%) rotate(45deg)",
+                      zIndex: 0,
+                    },
+                  },
+                },
+              }}
+              transformOrigin={{ horizontal: "right", vertical: "top" }}
+              anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
+            >
+              <Link to={'/account'}>
+              <MenuItem onClick={handleClose}>
+                <User /> Account
+              </MenuItem>
+              </Link>
+              <MenuItem onClick={handleClose}>
+                <ListItemIcon>
+                  <Settings />
+                </ListItemIcon>
+                Settings
+              </MenuItem>
+              <Divider />
+              <MenuItem onClick={handleClose}>
+                <ListItemIcon>
+                  <LogOut/>
+                </ListItemIcon>
+                Logout
+              </MenuItem>
+            </Menu>
           </div>
         </div>
       </div>

@@ -35,7 +35,7 @@ export default function AutoSwiper() {
       >
         
         <SwiperSlide style={{ background: "black" }}>
-          <div className="w-full flex p-5 items-center text-start flex-col lg:flex-row lg:justify-between">
+          <div className="w-full flex p-5 lg:p-7 items-center text-start flex-col lg:flex-row lg:justify-between">
             <aside className="flex flex-col pl-5 gap-5">
               <div className="text-white text-3xl flex items-center gap-2">
                 <img
@@ -58,7 +58,7 @@ export default function AutoSwiper() {
               </button>
             </aside>
             <img
-              className="w-40 pt-5 lg:max-w-[50%] lg:p-5"
+              className="w-40 pt-5 lg:max-w-[40%] lg:p-5"
               src={iphone}
               alt="iPhone"
             />
@@ -68,7 +68,7 @@ export default function AutoSwiper() {
         <SwiperSlide style={{ background: "black" }}>
           <div className="w-full flex p-5 items-center text-start flex-col-reverse lg:flex-row lg:justify-between">
             <img
-              className="w-44 pt-10 lg:max-w-[45%] lg:p-5"
+              className="w-44 pt-10 lg:max-w-[40%] lg:p-5"
               src={watch}
               alt="Apple Watch"
             />
@@ -97,7 +97,7 @@ export default function AutoSwiper() {
         </SwiperSlide>
 
         <SwiperSlide style={{ background: "black" }}>
-          <div className="w-full flex p-5 items-center text-center flex-col lg:flex-row lg:justify-between lg:text-start">
+          <div className="w-full flex p-5 lg:p-7 items-center text-center flex-col lg:flex-row lg:justify-between lg:text-start">
             <aside className="flex flex-col lg:pl-5 gap-5">
               <div className="text-white text-3xl flex items-center gap-2 justify-center lg:justify-start">
                 <img
