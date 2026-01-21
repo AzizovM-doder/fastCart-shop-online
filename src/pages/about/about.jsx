@@ -3,12 +3,33 @@ import client from "../../images/client.png";
 import pers1 from "../../images/pers1.png";
 import pers2 from "../../images/pers2.png";
 import pers3 from "../../images/pers3.png";
-import Card2 from "../../components/card2";
 import Card3 from "../../components/card3";
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from "@/components/ui/breadcrumb";
 const About = () => {
   return (
     <main>
       <header>
+        
+        <section className="max-w-7xl m-auto p-5">
+          <Breadcrumb className="-mr-10">
+            <BreadcrumbList>
+              <BreadcrumbItem>
+                <BreadcrumbLink href="/">Home</BreadcrumbLink>
+              </BreadcrumbItem>
+              <BreadcrumbSeparator />
+              <BreadcrumbItem>
+                <BreadcrumbPage>About</BreadcrumbPage>
+              </BreadcrumbItem>
+            </BreadcrumbList>
+          </Breadcrumb>
+        </section>
         <section className="max-w-7xl m-auto p-5 flex flex-col items-center lg:flex-row gap-5">
           <aside className="lg:max-w-1/2 flex flex-col gap-5">
             <h1 className="text-4xl font-bold">Our Story</h1>
