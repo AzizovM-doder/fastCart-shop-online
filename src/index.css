@@ -124,3 +124,6 @@
 *{
   transition: all .3s ease;
 }
+button{
+  cursor: pointer;
+}
