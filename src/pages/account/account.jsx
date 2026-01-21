@@ -1,10 +1,29 @@
 import { Mail, Phone } from "lucide-react";
 import React from "react";
 import MainBtn from "../../components/mainBtn";
-
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from "@/components/ui/breadcrumb";
 const Account = () => {
   return (
-    <main className="lg:max-w-7xl lg:m-auto p-5 flex flex-col lg:flex-row gap-15">
+    <main className="lg:max-w-7xl m-auto">
+<Breadcrumb className="-mr-10">
+          <BreadcrumbList>
+            <BreadcrumbItem>
+              <BreadcrumbLink href="/">Home</BreadcrumbLink>
+            </BreadcrumbItem>
+            <BreadcrumbSeparator />
+            <BreadcrumbItem>
+              <BreadcrumbPage>Account</BreadcrumbPage>
+            </BreadcrumbItem>
+          </BreadcrumbList>
+        </Breadcrumb>
+    <section className="lg:max-w-7xl lg:m-auto p-5 flex flex-col lg:flex-row gap-15">
       <aside className="flex flex-col items-start gap-5 ">
         <ul className="*:pl-3">
           <h1 className="font-bold -ml-3 text-lg">Manage My Account</h1>
@@ -74,6 +93,7 @@ const Account = () => {
           <MainBtn text={"Send Massage"} />
         </div>
       </aside>
+    </section>
     </main>
   );
 };

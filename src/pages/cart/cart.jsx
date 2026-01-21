@@ -10,6 +10,7 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 import MainBtn from "../../components/mainBtn";
+import { Link } from "react-router-dom";
 
 const Cart = () => {
   return (
@@ -112,7 +113,9 @@ const Cart = () => {
               <p>Total:</p>
               <p>$1750</p>
             </div>
+            <Link to='/checkOut'>
             <MainBtn text={'Procees to checkout'}/>
+            </Link>
           </aside>
         </section>
       </div>
