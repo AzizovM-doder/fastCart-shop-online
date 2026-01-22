@@ -40,6 +40,7 @@ import MainBtn from "../../components/mainBtn";
 import { Link, useNavigate } from "react-router-dom";
 import Card2 from "../../components/card2";
 import { useDispatch, useSelector } from "react-redux";
+<<<<<<< HEAD
 import { API_Img, getBrands } from "../../api/apiBrandSlice.js";
 import { getCategory } from "../../api/apiCategory.js";
 import { getProduct } from "../../api/apiProductSlice.js";
@@ -52,10 +53,20 @@ const Home = () => {
     dispatch(getCategory());
     dispatch(getProduct())
   });
+=======
+import {getBrands} from '../../api/apiBrandSlice.js'
+const Home = () => {
+  const {data} = useSelector((state) => state.brandSlice)
+  const dispatch = useDispatch()
+  useEffect(() =>{
+    dispatch(getBrands())
+  },)
+>>>>>>> 7c3794320c57b66222b5cb4e09e735df8fdbe9f7
   return (
     <main>
       <header>
         <section className="max-w-7xl m-auto lg:p-5 flex flex-col gap-5 lg:flex-row lg:justify-between">
+<<<<<<< HEAD
           <aside className="flex flex-wrap lg:w-1/6 gap-2 p-5 lg:p-0 lg:gap-5 lg:flex-nowrap lg:flex-col">
             {category?.map((e) => {
               return (
@@ -81,6 +92,44 @@ const Home = () => {
                 </NavigationMenu>
               );
             })}
+=======
+          <aside className="flex flex-wrap gap-2 p-5 lg:p-0 lg:gap-5 lg:flex-nowrap lg:flex-col">
+            {data?.map((e) =>{   
+              return (
+
+                <Link to={'/products'} className="flex items-center gap-3 px-3 py-2 bg-gray-200 rounded-sm lg:bg-[#00000000] lg:p-0">
+              {e.brandName} <ArrowRight />
+            </Link>
+            )   
+            })}
+            {/* <Link to={'/products'} className="flex items-center gap-3 px-3 py-2 bg-gray-200 rounded-sm lg:bg-[#00000000] lg:p-0">
+              Woman’s Fashion <ArrowRight />
+            </Link>
+            <Link to={'/products'}  className="flex items-center gap-3 px-3 py-2 bg-gray-200 rounded-sm lg:bg-[#00000000] lg:p-0">
+              Men’s Fashion <ArrowRight />
+            </Link>
+            <Link to={'/products'} className="flex items-center gap-3 px-3 py-2 bg-gray-200 rounded-sm lg:bg-[#00000000] lg:p-0">
+              Electronics
+            </Link>
+            <Link to={'/products'}  className="flex items-center gap-3 px-3 py-2 bg-gray-200 rounded-sm lg:bg-[#00000000] lg:p-0">
+              Home & Lifestyle
+            </Link>
+            <Link to={'/products'} className="flex items-center gap-3 px-3 py-2 bg-gray-200 rounded-sm lg:bg-[#00000000] lg:p-0">
+              Medicine
+            </Link>
+            <Link to={'/products'} className="flex items-center gap-3 px-3 py-2 bg-gray-200 rounded-sm lg:bg-[#00000000] lg:p-0">
+              Sports & Outdoor
+            </Link>
+            <Link to={'/products'}  className="flex items-center gap-3 px-3 py-2 bg-gray-200 rounded-sm lg:bg-[#00000000] lg:p-0">
+              Baby’s & Toys
+            </Link>
+            <Link to={'/products'}  className="flex items-center gap-3 px-3 py-2 bg-gray-200 rounded-sm lg:bg-[#00000000] lg:p-0">
+              Groceries & Pets
+            </Link>
+            <Link to={'/products'}  className="flex items-center gap-3 px-3 py-2 bg-gray-200 rounded-sm lg:bg-[#00000000] lg:p-0">
+              Health & Beauty
+            </Link> */}
+>>>>>>> 7c3794320c57b66222b5cb4e09e735df8fdbe9f7
           </aside>
           <hr className="h-full w-3" />
           <AutoSwiper />
