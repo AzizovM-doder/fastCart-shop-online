@@ -4,8 +4,11 @@ import { Checkbox, Rating } from "@mui/material";
 import { Trash2, Eye, ShoppingCart } from "lucide-react";
 import { Link } from "react-router-dom";
 import W from "./w";
+import { useDispatch } from "react-redux";
+import { addToCart } from "../store/reducers/cartSlice";
 
 const Card1_2 = ({ data = [] }) => {
+  const dispatch = useDispatch()
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 lg:gap-7">
       {data.map((item, i) => (
@@ -43,8 +46,8 @@ const Card1_2 = ({ data = [] }) => {
                 className="object-contain w-full h-36"
               />
 
-              {/* button INSIDE gray box */}
               <button
+              onClick={() => dispatch(addToCart())}
                 className="
           absolute bottom-0 left-0 w-full h-12
           flex items-center justify-center gap-2

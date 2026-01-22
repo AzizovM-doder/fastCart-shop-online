@@ -5,8 +5,8 @@ export const getProduct = createAsyncThunk('productSlice/getProduct' , async()=>
     try {
         let res = await fetch(API_Product)
         let data = await res.json()
-        console.log(data.data.products);      
-        return data.data.products
+        console.log(data.data);
+        return data.data
     } catch (error) {
         console.error(error);
     }

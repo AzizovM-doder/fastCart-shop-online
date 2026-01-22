@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 import {
   Breadcrumb,
@@ -22,26 +22,20 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { Checkbox } from "@/components/ui/checkbox";
-
-import image from "../../images/joystick.png";
-import image2 from "../../images/keyboard.png";
-import image3 from "../../images/monitor.png";
-import image4 from "../../images/chair.png";
-import image5 from "../../images/coat.png";
-import image6 from "../../images/bag.png";
-import image7 from "../../images/cpu.png";
-import image8 from "../../images/shit.png";
-import jbl from "../../images/jbl.png";
-import image9 from "../../images/dawg.png";
-import image10 from "../../images/canon.png";
-import image11 from "../../images/laptop.png";
-import image12 from "../../images/curology.png";
-import image13 from "../../images/kidCar.png";
-import image14 from "../../images/boot.png";
-import image15 from "../../images/joystick2.png";
-import image16 from "../../images/jacket.png";
 import Card1_3 from "../../components/card1_3";
+import { useDispatch, useSelector } from "react-redux";
+import { getCategory } from "../../api/apiCategory";
+import { API_Img, getBrands } from "../../api/apiBrandSlice";
+import { getProduct } from "../../api/apiProductSlice";
 const Products = () => {
+  const { category } = useSelector((state) => state.categorySlice);
+  const { product, data } = useSelector((state) => state.productSlice);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getCategory());
+    dispatch(getProduct());
+  }, []);
+
   return (
     <main>
       <header>
@@ -71,77 +65,77 @@ const Products = () => {
       </header>
       <main>
         <section className="max-w-7xl flex flex-col lg:flex-row gap-5 m-auto p-5">
-          <Accordion className='lg:w-1/4' type="single" collapsible defaultValue="item-1">
-            <AccordionItem value="item-1">
-              <AccordionTrigger>Category</AccordionTrigger>
-              <AccordionContent>All products</AccordionContent>
-              <AccordionContent>Electronics</AccordionContent>
-              <AccordionContent>Home & Lifestyle</AccordionContent>
-              <AccordionContent>Medicine</AccordionContent>
-              <AccordionContent>Sports & Outdoor</AccordionContent>
-            </AccordionItem>
-            <AccordionItem value="item-2">
-              <AccordionTrigger>Brands</AccordionTrigger>
-              <AccordionContent>
-                <Checkbox /> Samsung
-              </AccordionContent>
-              <AccordionContent>
-                <Checkbox /> Apple
-              </AccordionContent>
-              <AccordionContent>
-                <Checkbox /> Huawei
-              </AccordionContent>
-              <AccordionContent>
-                <Checkbox /> Pocco
-              </AccordionContent>
-            </AccordionItem>
-          </Accordion>
+          <div className="lg:w-1/4">
+            <Accordion
+              className="lg:w-full"
+              type="single"
+              collapsible
+              defaultValue="category"
+            >
+              <AccordionItem value="category">
+                <AccordionTrigger className="text-2xl">
+                  Category
+                </AccordionTrigger>
+
+                <AccordionContent>
+                  <Accordion type="single" collapsible className="w-full">
+                    {category?.map((elem) => (
+                      <AccordionItem key={elem?.id} value={"" + elem?.id}>
+                        <AccordionTrigger>
+                          <div className="max-w-10 flex items-center gap-5 p-1">
+                            <img
+                              width={40}
+                              height={40}
+                              src={`${API_Img}/${elem.categoryImage}`}
+                              alt={elem?.categoryImage}
+                              />
+                              {console.log(elem)}
+                            {elem?.categoryName}
+                          </div>
+                        </AccordionTrigger>
+
+                        <AccordionContent>
+                          <div className="flex flex-col pl-10 gap-1">
+                            {elem.subCategories?.map((el) => (
+                              <div key={el.id}>{el.subCategoryName}</div>
+                            ))}
+                          </div>
+                        </AccordionContent>
+                      </AccordionItem>
+                    ))}
+                  </Accordion>
+                </AccordionContent>
+              </AccordionItem>
+            </Accordion>
+
+            <div>
+              <Accordion type="single" collapsible defaultValue="brands">
+                <AccordionItem value="brands">
+                  <AccordionTrigger className="text-2xl">
+                    Brands
+                  </AccordionTrigger>
+                  <AccordionContent>
+                    <div className="flex flex-col gap-2">
+                      {data.brands?.map((e) => {
+                        return (
+                          <label
+                            key={e?.id}
+                            className="flex items-center gap-2"
+                          >
+                            <Checkbox />
+                            <p className="pl-3 font-medium">{e?.brandName}</p>
+                          </label>
+                        );
+                      })}
+                    </div>
+                  </AccordionContent>
+                </AccordionItem>
+              </Accordion>
+            </div>
+          </div>
           <aside>
             <div>
-              <Card1_3
-                data={[
-                  {
-                    name: "HAVIT HV-G92 Gamepad",
-                    img: image,
-                    price: 120,
-                  },
-                  {
-                    name: "AK-900 Wired Keyboard",
-                    img: image2,
-                    price: 960,
-                  },
-                  {
-                    name: "IPS LCD Gaming Monitor",
-                    img: image3,
-                    price: 370,
-                  },
-                  {
-                    name: "S-Series Comfort Chair ",
-                    img: image4,
-                    price: 375,
-                  },
-                  {
-                    name: "The north coat",
-                    img: image5,
-                    price: 260,
-                  },
-                  {
-                    name: "Gucci duffle bag",
-                    img: image6,
-                    price: 960,
-                  },
-                  {
-                    name: "RGB liquid CPU Cooler",
-                    img: image7,
-                    price: 160,
-                  },
-                  {
-                    name: "Small BookSelf",
-                    img: image8,
-                    price: 360,
-                  },
-                ]}
-              />
+              <Card1_3 data={product} />
             </div>
           </aside>
         </section>

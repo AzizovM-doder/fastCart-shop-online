@@ -3,12 +3,15 @@ import { getProduct } from '../../api/apiProductSlice'
 export const productSlice = createSlice({
   name: 'productSlice',
   initialState : {
-    product : []
+    product : [],
+    data : []
   },
   reducers: {},
   extraReducers : (builder) =>{
     builder.addCase(getProduct.fulfilled , (state, actions) =>{
-        state.product = actions.payload
+        state.product = actions.payload.products
+        console.log(actions.payload.products)
+        state.data = actions.payload
     })
   }
 })

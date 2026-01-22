@@ -7,11 +7,16 @@ import { Eye, ShoppingCart } from "lucide-react";
 import { Link } from "react-router-dom";
 import W from "./w";
 import { API_Img } from "../api/apiBrandSlice";
+import { useDispatch } from "react-redux";
+import { addToCart } from "../store/reducers/cartSlice";
+
+
 
 const Card1 = ({ data,s, slc }) => {
+  const dispatch = useDispatch()
   return (
     <div className="flex gap-5 lg:gap-7 overflow-x-auto scroll-smooth [scrollbar-width:none] [-ms-overflow-style:none] no-scroll">
-      {data.slice(s || 0,slc || data.length).map((e) => (
+      {data?.slice(s || 0,slc || data.length).map((e) => (
         <div
           key={e.id}
           className="group relative flex flex-col min-w-full lg:min-w-72 p-3 lg:p-0 items-start gap-3 transition-all duration-300"
@@ -50,7 +55,7 @@ const Card1 = ({ data,s, slc }) => {
 
             <img width={180} src={`${API_Img}/${e.image}`} alt={e.name} />
 
-            <button className="absolute bottom-0 left-0 w-full py-3 flex items-center justify-center bg-black text-white opacity-0 translate-y-3 transition-all duration-300 group-hover:opacity-100 group-hover:translate-y-0">
+            <button onClick={() => dispatch(addToCart(e))} className="absolute bottom-0 left-0 w-full py-3 flex items-center justify-center bg-black text-white opacity-0 translate-y-3 transition-all duration-300 group-hover:opacity-100 group-hover:translate-y-0">
               <ShoppingCart />
               <p className="px-3">Add To Cart</p>
             </button>

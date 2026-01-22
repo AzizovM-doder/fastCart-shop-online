@@ -7,38 +7,47 @@ import {
   LucideShoppingCart,
   SearchIcon,
   Settings,
+  ShoppingCartIcon,
   User,
 } from "lucide-react";
+import Badge from "@mui/material/Badge";
 import { Button } from "@/components/ui/button";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
 
-import {
-  CreditCardIcon,
-  LogOutIcon,
-  SettingsIcon,
-  UserIcon,
-} from "lucide-react";
 import { ButtonGroup } from "@/components/ui/button-group";
 import { Input } from "@/components/ui/input";
 import Drawer_nav from "./drawer_nav";
-import { Avatar, Divider, ListItemIcon, Menu, MenuItem } from "@mui/material";
+import {
+  Divider,
+  IconButton,
+  ListItemIcon,
+  Menu,
+  MenuItem,
+  styled,
+} from "@mui/material";
+import { useSelector } from "react-redux";
 
 const Nav = () => {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
 
+
+  const items = useSelector((state) => state.cartSlice.items || []);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
   const handleClose = () => {
     setAnchorEl(null);
   };
+const StyledBadge = styled(Badge)(({ theme }) => ({
+  "& .MuiBadge-badge": {
+    right: -3,
+    top: 13,
+    border: `2px solid ${(theme.vars ?? theme).palette.background.paper}`,
+    padding: "0 4px",
+    backgroundColor: "#DB4444",
+    color: "white",          
+  },
+}));
 
   return (
     <nav className="backdrop-blur-lg fixed top-0 left-0 right-0 z-50 bg-white/30">
@@ -144,7 +153,11 @@ const Nav = () => {
               }
               to={"cart"}
             >
-              <LucideShoppingCart />
+              <IconButton aria-label="cart">
+                <StyledBadge badgeContent={items.length} color="secondary">
+                  <ShoppingCartIcon />
+                </StyledBadge>
+              </IconButton>
             </NavLink>
             <button
               onClick={handleClick}
@@ -193,10 +206,10 @@ const Nav = () => {
               transformOrigin={{ horizontal: "right", vertical: "top" }}
               anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
             >
-              <Link to={'/account'}>
-              <MenuItem onClick={handleClose}>
-                <User /> Account
-              </MenuItem>
+              <Link to={"/account"}>
+                <MenuItem onClick={handleClose}>
+                  <User /> Account
+                </MenuItem>
               </Link>
               <MenuItem onClick={handleClose}>
                 <ListItemIcon>
@@ -207,7 +220,7 @@ const Nav = () => {
               <Divider />
               <MenuItem onClick={handleClose}>
                 <ListItemIcon>
-                  <LogOut/>
+                  <LogOut />
                 </ListItemIcon>
                 Logout
               </MenuItem>
