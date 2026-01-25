@@ -7,6 +7,7 @@ import { Eye, ShoppingCart } from "lucide-react";
 import { Link } from "react-router-dom";
 import W from "./w";
 import { API_Img } from "../api/apiBrandSlice";
+<<<<<<< HEAD
 import { useDispatch, useSelector } from "react-redux";
 import { addToCart } from "../store/reducers/cartSlice";
 import { addToWishlist } from "../store/reducers/wishlistSlice";
@@ -16,6 +17,10 @@ const Card1_3 = ({ data, s, slc }) => {
   const wishlist = useSelector(
     (state) => state.wishlist?.items || state.wishlistSlice?.items || []
   );
+=======
+import { useDispatch } from "react-redux";
+import { addToCart } from "../store/reducers/cartSlice";
+>>>>>>> 3d6c9b2b399e267a249455dbc96e1e56f9cecb29
 
   return (
     <div className="grid lg:grid-cols-3 gap-5">

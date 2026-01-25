@@ -112,7 +112,11 @@ const Home = () => {
             </Link>
           </div>
           <div>
+<<<<<<< HEAD
             <Card1 slc={4} data={product?.toReversed()} />
+=======
+            <Card1 slc={4} data={product} />
+>>>>>>> 3d6c9b2b399e267a249455dbc96e1e56f9cecb29
           </div>
         </section>
         <section className="max-w-7xl m-auto p-5 lg:p-10 lg:rounded-lg bg-black my-10">
@@ -146,6 +150,11 @@ const Home = () => {
           </div>
           <div>
             <Card1 data={product} />
+<<<<<<< HEAD
+=======
+            <div className="py-10"></div>
+            <Card1 data={product} />
+>>>>>>> 3d6c9b2b399e267a249455dbc96e1e56f9cecb29
           </div>
 
           <Link className="flex my-15 justify-center" to={"products"}>
