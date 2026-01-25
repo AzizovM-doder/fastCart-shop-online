@@ -4,14 +4,15 @@ export const productSlice = createSlice({
   name: 'productSlice',
   initialState : {
     product : [],
-    data : []
+    user : {},
+    data : [],
   },
   reducers: {},
   extraReducers : (builder) =>{
     builder.addCase(getProduct.fulfilled , (state, actions) =>{
         state.product = actions.payload.products
-        console.log(actions.payload.products)
         state.data = actions.payload
+        state.user = actions.payload.data
     })
   }
 })

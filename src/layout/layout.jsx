@@ -7,10 +7,10 @@ const Layout = () => {
   return (
     <div className="min-h-screen flex flex-col">
       <Nav />
-      <div className="py-10"></div>
-      <Outlet />
-      <div className="grow"></div>
-      <Footer/>
+      <main className="flex-1 pt-20">
+        <Outlet />
+      </main>
+      <Footer />
     </div>
   );
 };

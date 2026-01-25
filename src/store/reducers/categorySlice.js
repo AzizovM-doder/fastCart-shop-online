@@ -8,7 +8,7 @@ export const categorySlice = createSlice({
   reducers: {},
   extraReducers : (builder) =>{
     builder.addCase(getCategory.fulfilled , (state, actions) =>{
-        state.category = actions.payload
+        state.category = actions.payload.data
     })
   }
 })

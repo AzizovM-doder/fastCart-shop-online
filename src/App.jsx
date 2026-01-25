@@ -35,7 +35,7 @@ const App = () => {
           element: <Wishlist />,
         },
         {
-          path: "details",
+          path: "/details/:id",
           element: <Details />,
         },
         {

@@ -12,7 +12,7 @@ import {
 } from "@/components/ui/breadcrumb";
 const Contact = () => {
   return (
-    <main>
+    <main className="p-5 min-h-screen w-full">
       <section className="max-w-7xl m-auto p-5">
         <Breadcrumb className="-mr-10">
           <BreadcrumbList>

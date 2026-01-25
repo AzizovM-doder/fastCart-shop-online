@@ -88,8 +88,7 @@ const Products = () => {
                               height={40}
                               src={`${API_Img}/${elem.categoryImage}`}
                               alt={elem?.categoryImage}
-                              />
-                              {console.log(elem)}
+                            />
                             {elem?.categoryName}
                           </div>
                         </AccordionTrigger>
@@ -97,7 +96,15 @@ const Products = () => {
                         <AccordionContent>
                           <div className="flex flex-col pl-10 gap-1">
                             {elem.subCategories?.map((el) => (
-                              <div key={el.id}>{el.subCategoryName}</div>
+                              <label
+                                key={el?.id}
+                                className="flex items-center gap-2"
+                              >
+                                <Checkbox />
+                                <p className="pl-3 font-medium">
+                                  {el?.subCategoryName}
+                                </p>
+                              </label>
                             ))}
                           </div>
                         </AccordionContent>

@@ -23,7 +23,7 @@ const Account = () => {
             </BreadcrumbItem>
           </BreadcrumbList>
         </Breadcrumb>
-    <section className="lg:max-w-7xl lg:m-auto p-5 flex flex-col lg:flex-row gap-15">
+    <section className="lg:max-w-7xl lg:m-auto p-5 flex w-full *:w-full flex-col lg:flex-row gap-15">
       <aside className="flex flex-col items-start gap-5 ">
         <ul className="*:pl-3">
           <h1 className="font-bold -ml-3 text-lg">Manage My Account</h1>
