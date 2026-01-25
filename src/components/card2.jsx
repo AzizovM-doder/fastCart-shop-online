@@ -12,11 +12,8 @@ const Card2 = ({ data = [] }) => {
           <Link
             key={e.id}
             to={"/products"}
-<<<<<<< HEAD
             className="w-full hover:*:invert lg:w-50 lg:h-70 h-70 flex flex-col active:scale-95 active:bg-gray-500 active:*:text-yellow-400 rounded-sm border-2 hover:scale-105 hover:bg-[#DB4444] justify-center items-center gap-5 p-15"
-=======
-            className="w-full lg:w-50 lg:h-70 h-70 flex flex-col active:scale-95 active:bg-gray-500 active:*:text-yellow-400 rounded-sm border-2 hover:scale-105 hover:bg-[#DB4444] hover:text-white justify-center items-center gap-5 p-15"
->>>>>>> 3d6c9b2b399e267a249455dbc96e1e56f9cecb29
+
           >
             <div className="max-w-10 p-1">
               <img

@@ -3,21 +3,12 @@ import image5 from "../../images/coat.png";
 import image6 from "../../images/bag.png";
 import image7 from "../../images/cpu.png";
 import image8 from "../../images/shit.png";
-<<<<<<< HEAD
-=======
-
-import MainBtn from "../../components/mainBtn";
->>>>>>> 3d6c9b2b399e267a249455dbc96e1e56f9cecb29
 import { Link } from "react-router-dom";
 import Card1_2 from "../../components/card1_2";
 import { useSelector } from "react-redux";
 const Wishlist = () => {
-<<<<<<< HEAD
   const items = useSelector((state) => state.wishlistSlice.items || []);
-=======
-    const items = useSelector((state) => state.wishlistSlice.items || []);
-console.log(items);
->>>>>>> 3d6c9b2b399e267a249455dbc96e1e56f9cecb29
+
 
   return (
     <main>
@@ -30,13 +21,7 @@ console.log(items);
             </button>
           </div>
           <div>
-<<<<<<< HEAD
             <Card1 data={items} />
-=======
-            <Card1
-              data={items}
-            />
->>>>>>> 3d6c9b2b399e267a249455dbc96e1e56f9cecb29
           </div>
         </section>
         <section className="max-w-7xl m-auto p-5">
