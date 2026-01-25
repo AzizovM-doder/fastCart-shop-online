@@ -34,7 +34,7 @@ const Home = () => {
           <aside className="flex flex-wrap lg:w-1/6 gap-2 p-5 lg:p-0 lg:gap-5 lg:flex-nowrap lg:flex-col">
             {category?.map((e) => {
               return (
-                <NavigationMenu>
+                <NavigationMenu key={e.id}>
                   <NavigationMenuList>
                     <NavigationMenuItem>
                       <NavigationMenuTrigger>
@@ -80,7 +80,7 @@ const Home = () => {
             <h1 className="font-bold text-5xl">Flash Sales</h1>
           </div>
           <div>
-            <Card1 data={product} />
+            <Card1 slc={4} data={product} />
           </div>
 
           <Link className="flex my-15 justify-center" to={"products"}>
@@ -112,7 +112,7 @@ const Home = () => {
             </Link>
           </div>
           <div>
-            <Card1 s={5} data={product} />
+            <Card1 slc={4} data={product} />
           </div>
         </section>
         <section className="max-w-7xl m-auto p-5 lg:p-10 lg:rounded-lg bg-black my-10">
@@ -145,9 +145,9 @@ const Home = () => {
             <h1 className="font-bold text-5xl">Explore Our Products</h1>
           </div>
           <div>
-            <Card1 data={product} slc={5} />
+            <Card1 data={product} />
             <div className="py-10"></div>
-            <Card1 data={product} s={4} slc={9} />
+            <Card1 data={product} />
           </div>
 
           <Link className="flex my-15 justify-center" to={"products"}>

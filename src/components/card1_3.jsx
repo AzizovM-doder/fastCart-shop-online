@@ -8,6 +8,7 @@ import { Link } from "react-router-dom";
 import W from "./w";
 import { API_Img } from "../api/apiBrandSlice";
 import { useDispatch } from "react-redux";
+import { addToCart } from "../store/reducers/cartSlice";
 
 const Card1_3 = ({ data }) => {
   const dispatch = useDispatch()

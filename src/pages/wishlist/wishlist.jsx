@@ -21,20 +21,15 @@ import image5 from "../../images/coat.png";
 import image6 from "../../images/bag.png";
 import image7 from "../../images/cpu.png";
 import image8 from "../../images/shit.png";
-import jbl from "../../images/jbl.png";
-import image9 from "../../images/dawg.png";
-import image10 from "../../images/canon.png";
-import image11 from "../../images/laptop.png";
-import image12 from "../../images/curology.png";
-import image13 from "../../images/kidCar.png";
-import image14 from "../../images/boot.png";
-import image15 from "../../images/joystick2.png";
-import image16 from "../../images/jacket.png";
 
 import MainBtn from "../../components/mainBtn";
 import { Link } from "react-router-dom";
 import Card1_2 from "../../components/card1_2";
+import { useSelector } from "react-redux";
 const Wishlist = () => {
+    const items = useSelector((state) => state.wishlistSlice.items || []);
+console.log(items);
+
   return (
     <main>
       <main>
@@ -46,29 +41,8 @@ const Wishlist = () => {
             </button>
           </div>
           <div>
-            <Card1_2
-              data={[
-                {
-                  name: "HAVIT HV-G92 Gamepad",
-                  img: image,
-                  price: 120,
-                },
-                {
-                  name: "AK-900 Wired Keyboard",
-                  img: image2,
-                  price: 960,
-                },
-                {
-                  name: "IPS LCD Gaming Monitor",
-                  img: image3,
-                  price: 370,
-                },
-                {
-                  name: "S-Series Comfort Chair ",
-                  img: image4,
-                  price: 375,
-                },
-              ]}
+            <Card1
+              data={items}
             />
           </div>
         </section>

@@ -16,12 +16,12 @@ import ps4 from "../../images/ps4.png";
 import ps5 from "../../images/ps5.png";
 import { Button } from "@/components/ui/button";
 import { ButtonGroup } from "@/components/ui/button-group";
-import { Heart, PlusIcon } from "lucide-react";
+import { Heart } from "lucide-react";
 const Details = () => {
   return (
     <main>
       <header>
-        <section className="max-w-7xl m-auto p-5'">
+        <section className="max-w-7xl m-auto px-5'">
           <Breadcrumb className="lg:-mr-10">
             <BreadcrumbList>
               <BreadcrumbItem>
@@ -74,7 +74,6 @@ const Details = () => {
           </aside>
         </section>
       </header>
-      <main></main>
     </main>
   );
 };

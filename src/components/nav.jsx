@@ -1,5 +1,5 @@
 import React from "react";
-import fastCartLogo from "../../public/fastCartLogo.png";
+import fastCartLogo from "/fastCartLogo.png";
 import { Link, NavLink } from "react-router-dom";
 import {
   Heart,
@@ -30,7 +30,6 @@ const Nav = () => {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
 
-
   const items = useSelector((state) => state.cartSlice.items || []);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -38,26 +37,26 @@ const Nav = () => {
   const handleClose = () => {
     setAnchorEl(null);
   };
-const StyledBadge = styled(Badge)(({ theme }) => ({
-  "& .MuiBadge-badge": {
-    right: -3,
-    top: 13,
-    border: `2px solid ${(theme.vars ?? theme).palette.background.paper}`,
-    padding: "0 4px",
-    backgroundColor: "#DB4444",
-    color: "white",          
-  },
-}));
+  const StyledBadge = styled(Badge)(({ theme }) => ({
+    "& .MuiBadge-badge": {
+      right: -3,
+      top: 13,
+      border: `2px solid ${(theme.vars ?? theme).palette.background.paper}`,
+      padding: "0 4px",
+      backgroundColor: "#DB4444",
+      color: "white",
+    },
+  }));
 
   return (
-    <nav className="backdrop-blur-lg fixed top-0 left-0 right-0 z-50 bg-white/30">
+    <nav className="backdrop-blur-lg shadow fixed top-0 left-0 right-0 z-50 bg-white/30">
       <div className="max-w-7xl flex m-auto p-5 justify-between items-center">
         <div className="flex justify-between w-full lg:w-auto items-center">
           <div className="lg:hidden">
             <Drawer_nav />
           </div>
           <Link to={"/"}>
-            <img src={fastCartLogo} alt="logo" width={150} />
+            <img src={fastCartLogo} className={"w-20"} alt="logo" />
           </Link>
           <div className="flex gap-3 items-center lg:hidden">
             <NavLink

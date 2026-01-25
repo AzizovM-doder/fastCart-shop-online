@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import W from "./w";
 import { useDispatch } from "react-redux";
 import { addToCart } from "../store/reducers/cartSlice";
+import { API_Img } from "../api/apiBrandSlice";
 
 const Card1_2 = ({ data = [] }) => {
   const dispatch = useDispatch()
@@ -41,7 +42,7 @@ const Card1_2 = ({ data = [] }) => {
 
               {/* image */}
               <img
-                src={item.img}
+                src={`${API_Img}/${item.image}`}
                 alt={item.name}
                 className="object-contain w-full h-36"
               />
