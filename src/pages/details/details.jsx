@@ -18,6 +18,7 @@ import { getProductById } from "../../api/apiProductSlice";
 import { API_IMG } from "../../utils/url";
 import { Checkbox } from "@mui/material";
 import { addToWishlist } from "../../store/reducers/wishlistSlice";
+import { postToCart } from "../../api/cartAPI/cartAPI";
 
 const Details = () => {
   const { id } = useParams();
@@ -161,6 +162,7 @@ const Details = () => {
             <div className="border-t border-slate-100 pt-4 space-y-4">
               <div className="flex gap-3 pt-2">
                 <Button
+                onClick={dispatch(postToCart(id))}
                   className="flex-1 py-3 flex justify-center gap-3"
                   variant="destructive"
                   size="lg"

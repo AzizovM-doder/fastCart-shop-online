@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 
 import {
   Breadcrumb,
@@ -27,14 +27,34 @@ import { useDispatch, useSelector } from "react-redux";
 import { getCategory } from "../../api/apiCategory";
 import { API_Img, getBrands } from "../../api/apiBrandSlice";
 import { getProduct } from "../../api/apiProductSlice";
+import { RadioGroup, RadioGroupItem } from "../../components/ui/radio-group";
+import { Label } from "../../components/ui/label";
+import { ButtonGroup } from "../../components/ui/button-group";
+import { Input } from "../../components/ui/input";
+import { Button } from "../../components/ui/button";
+import { SearchIcon } from "lucide-react";
+import { Slider } from "../../components/ui/slider";
 const Products = () => {
   const { category } = useSelector((state) => state.categorySlice);
-  const { product, data } = useSelector((state) => state.productSlice);
+  const { product } = useSelector((state) => state.productSlice);
+  const { brand } = useSelector((state) => state.brandSlice);
+  const [params, setParams] = useState({
+    productName: null,
+    minPrice: 0,
+    maxPrice: 1500,
+    brandId: null,
+    colorId: null,
+    categoryId: null,
+    subCategoryId: null,
+    pageNumber: null,
+    pageSize: null,
+  });
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getCategory());
-    dispatch(getProduct());
-  }, []);
+    dispatch(getBrands());
+    dispatch(getProduct(params));
+  }, [params, dispatch]);
 
   return (
     <main>
@@ -51,16 +71,18 @@ const Products = () => {
               </BreadcrumbItem>
             </BreadcrumbList>
           </Breadcrumb>
-          <Select>
-            <SelectTrigger className="lg:w-100">
-              <SelectValue placeholder="Popularity" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="opt1">Opt1</SelectItem>
-              <SelectItem value="opt2">Opt2</SelectItem>
-              <SelectItem value="opt3">Opt3</SelectItem>
-            </SelectContent>
-          </Select>
+          <ButtonGroup>
+            <Input
+              onChange={(e) =>
+                setParams({ ...params, productName: e.target.value })
+              }
+              className="w-60"
+              placeholder="What are you looking for?"
+            />
+            <Button variant="outline" aria-label="Search">
+              <SearchIcon />
+            </Button>
+          </ButtonGroup>
         </section>
       </header>
       <main>
@@ -94,19 +116,28 @@ const Products = () => {
                         </AccordionTrigger>
 
                         <AccordionContent>
-                          <div className="flex flex-col pl-10 gap-1">
+                          <RadioGroup
+                            defaultValue=""
+                            className="flex flex-col pl-10 gap-1"
+                          >
                             {elem.subCategories?.map((el) => (
-                              <label
-                                key={el?.id}
-                                className="flex items-center gap-2"
-                              >
-                                <Checkbox />
-                                <p className="pl-3 font-medium">
+                              <div className="flex items-center gap-3">
+                                <RadioGroupItem
+                                  onClick={() =>
+                                    setParams({
+                                      ...params,
+                                      subCategoryId: el.id,
+                                    })
+                                  }
+                                  value={`option-${el.id}`}
+                                  id="option-one"
+                                />
+                                <Label htmlFor="option-one">
                                   {el?.subCategoryName}
-                                </p>
-                              </label>
+                                </Label>
+                              </div>
                             ))}
-                          </div>
+                          </RadioGroup>
                         </AccordionContent>
                       </AccordionItem>
                     ))}
@@ -123,13 +154,18 @@ const Products = () => {
                   </AccordionTrigger>
                   <AccordionContent>
                     <div className="flex flex-col gap-2">
-                      {data.brands?.map((e) => {
+                      {brand?.data?.map((e) => {
                         return (
                           <label
                             key={e?.id}
                             className="flex items-center gap-2"
                           >
-                            <Checkbox />
+                            <Checkbox
+                              checked={params.brandId == e?.id}
+                              onCheckedChange={() =>
+                                setParams({ ...params, brandId: e?.id })
+                              }
+                            />
                             <p className="pl-3 font-medium">{e?.brandName}</p>
                           </label>
                         );
@@ -138,6 +174,25 @@ const Products = () => {
                   </AccordionContent>
                 </AccordionItem>
               </Accordion>
+            </div>
+            <div className="pr-15 py-5">
+              <Slider
+                defaultValue={[params.minPrice, params.maxPrice]}
+                max={1500}
+                step={5}
+                className="mx-auto w-full max-w-xs"
+                onValueChange={(e) => {
+                  setParams({
+                    ...params,
+                    maxPrice: e[1],
+                    minPrice: e[0],
+                  });
+                }}
+              />
+              <div className="text-sm font-bold flex justify-between items-center py-5">
+                <p>Min Price : {params.minPrice}</p>
+                <p>Max Price : {params.maxPrice}</p>
+              </div>
             </div>
           </div>
           <aside>

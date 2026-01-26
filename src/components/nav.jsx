@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import fastCartLogo from "/fastCartLogo.png";
 import { Link, NavLink } from "react-router-dom";
 import {
@@ -24,19 +24,26 @@ import {
   MenuItem,
   styled,
 } from "@mui/material";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { getCart } from "../api/cartAPI/cartAPI";
 
 const Nav = () => {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
+  const dispatch = useDispatch();
+  const { cart } = useSelector((store) => store.cartSlice);
+  const totalProducts = cart?.[0]?.totalProducts;
 
-  const items = useSelector((state) => state.cartSlice.items || []);
+  // const {totalProducts} = cart?.at(0)
+  // console.log(totalProducts);
+  const token = localStorage.getItem("token") || [];
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
   const handleClose = () => {
     setAnchorEl(null);
   };
+
   const StyledBadge = styled(Badge)(({ theme }) => ({
     "& .MuiBadge-badge": {
       right: -3,
@@ -47,7 +54,9 @@ const Nav = () => {
       color: "white",
     },
   }));
-
+  useEffect(() => {
+    dispatch(getCart());
+  }, []);
   return (
     <nav className="backdrop-blur-lg shadow fixed top-0 left-0 right-0 z-50 bg-white/30">
       <div className="max-w-7xl flex m-auto p-5 justify-between items-center">
@@ -111,32 +120,29 @@ const Nav = () => {
           >
             About
           </NavLink>
-          <NavLink
-            className={({ isActive }) =>
-              isActive ? "border-b-[#B3B3B3]" : "border-b-[#00000000]"
-            }
-            to={"signUp"}
-          >
-            Sign Up
-          </NavLink>
-          <NavLink
-            className={({ isActive }) =>
-              isActive ? "border-b-[#B3B3B3]" : "border-b-[#00000000]"
-            }
-            to={"login"}
-          >
-            Log in
-          </NavLink>
+          {token.length < 10 ?  (
+            <NavLink
+              className={({ isActive }) =>
+                isActive ? "border-b-[#B3B3B3]" : "border-b-[#00000000]"
+              }
+              to={"signUp"}
+            >
+              Sign Up
+            </NavLink>
+          ) : null}
+          {token.length < 10 ? (
+            <NavLink
+              className={({ isActive }) =>
+                isActive ? "border-b-[#B3B3B3]" : "border-b-[#00000000]"
+              }
+              to={"login"}
+            >
+              Log in
+            </NavLink>
+          ) : null}
         </ul>
 
         <div className="hidden lg:flex items-center gap-10">
-          <ButtonGroup>
-            <Input className="w-60" placeholder="What are you looking for?" />
-            <Button variant="outline" aria-label="Search">
-              <SearchIcon />
-            </Button>
-          </ButtonGroup>
-
           <div className="flex gap-5 items-center">
             <NavLink
               className={({ isActive }) =>
@@ -153,7 +159,7 @@ const Nav = () => {
               to={"cart"}
             >
               <IconButton aria-label="cart">
-                <StyledBadge badgeContent={items.length} color="secondary">
+                <StyledBadge badgeContent={totalProducts} color="secondary">
                   <ShoppingCartIcon />
                 </StyledBadge>
               </IconButton>
@@ -217,7 +223,10 @@ const Nav = () => {
                 Settings
               </MenuItem>
               <Divider />
-              <MenuItem onClick={handleClose}>
+              <MenuItem onClick={() =>{
+                handleClose()
+                localStorage.removeItem('token')
+              }}>
                 <ListItemIcon>
                   <LogOut />
                 </ListItemIcon>

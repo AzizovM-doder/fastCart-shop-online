@@ -1,5 +1,3 @@
-import React from "react";
-import MainBtn from "./mainBtn";
 import { Checkbox, Rating } from "@mui/material";
 import FavoriteBorder from "@mui/icons-material/FavoriteBorder";
 import Favorite from "@mui/icons-material/Favorite";
@@ -8,8 +6,8 @@ import { Link } from "react-router-dom";
 import W from "./w";
 import { API_Img } from "../api/apiBrandSlice";
 import { useDispatch, useSelector } from "react-redux";
-import { addToCart } from "../store/reducers/cartSlice";
 import { addToWishlist } from "../store/reducers/wishlistSlice";
+import { postToCart } from "../api/cartAPI/cartAPI";
 
 const Card1_3 = ({ data, s, slc }) => {
   const dispatch = useDispatch();
@@ -64,7 +62,7 @@ const Card1_3 = ({ data, s, slc }) => {
               <img width={180} src={`${API_Img}/${e.image}`} alt={e.name} />
 
               <button
-                onClick={() => dispatch(addToCart(e))}
+                onClick={() => dispatch(postToCart(e.id))}
                 className="absolute bottom-0 left-0 w-full py-3 flex items-center justify-center bg-black text-white opacity-0 translate-y-3 transition-all duration-300 group-hover:opacity-100 group-hover:translate-y-0"
               >
                 <ShoppingCart />

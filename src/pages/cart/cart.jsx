@@ -1,264 +1,178 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useSnackbar } from "notistack";
 import {
-  Breadcrumb,
-  BreadcrumbItem,
-  BreadcrumbLink,
-  BreadcrumbList,
-  BreadcrumbPage,
-  BreadcrumbSeparator,
-} from "@/components/ui/breadcrumb";
-import MainBtn from "../../components/mainBtn";
+  deleteAllProductInCart,
+  deleteProductInCart,
+  getCart,
+  putIncreaseCart,
+  putReduceCart,
+} from "../../api/cartAPI/cartAPI";
+import { API_IMG } from "../../utils/url";
 import { Link } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
-import {
-  increaseQty,
-  decreaseQty,
-  removeFromCart,
-  clearCart,
-} from "../../store/reducers/cartSlice"; // adjust path
-import { API_Img } from "../../api/apiBrandSlice";
-import { ImageMinus } from "lucide-react";
+import { Trash2 } from "lucide-react";
 
 const Cart = () => {
   const dispatch = useDispatch();
+  const { enqueueSnackbar } = useSnackbar();
+  const { cart } = useSelector((store) => store.cartSlice);
 
-  const items = useSelector((state) => state.cartSlice.items || []);
+  const cartData = cart?.[0];
 
-  const subtotal = items.reduce((sum, item) => {
-    const price = item.productPrice || item.price || 0;
-    const qty = item.qty || 1;
-    return sum + price * qty;
-  }, 0);
+  useEffect(() => {
+    dispatch(getCart())
+      .unwrap()
+      .catch(() =>
+        enqueueSnackbar("Failed to load cart", { variant: "error" }),
+      );
+  }, []);
 
-  const formatPrice = (v) => `$${Number(v).toFixed(2)}`;
+  if (!cartData) {
+    return (
+      <div className="max-w-7xl mx-auto px-4 py-10">
+        <h1 className="text-2xl font-semibold mb-2">Cart</h1>
+        <p className="text-gray-500">Your cart is empty.</p>
+      </div>
+    );
+  }
+
+  const {
+    productsInCart = [],
+    totalProducts,
+    totalPrice,
+    totalDiscountPrice,
+  } = cartData;
+
+  const handleIncrease = async (id) => {
+    try {
+      await dispatch(putIncreaseCart(id)).unwrap();
+      enqueueSnackbar("Increased quantity", { variant: "success" });
+    } catch {
+      enqueueSnackbar("Couldn't increase", { variant: "error" });
+    }
+  };
+
+  const handleDecrease = async (id) => {
+    try {
+      await dispatch(putReduceCart(id)).unwrap();
+      enqueueSnackbar("Decreased quantity", { variant: "info" });
+    } catch {
+      enqueueSnackbar("Couldn't decrease", { variant: "error" });
+    }
+  };
+
+  const handleDelete = async (id) => {
+    try {
+      await dispatch(deleteProductInCart(id)).unwrap();
+      enqueueSnackbar("Item removed", { variant: "warning" });
+    } catch {
+      enqueueSnackbar("Couldn't remove item", { variant: "error" });
+    }
+  };
+
+  const handleClear = async (id) => {
+    try {
+      await dispatch(deleteAllProductInCart(id)).unwrap();
+      enqueueSnackbar("Cart cleared", { variant: "warning" });
+    } catch {
+      enqueueSnackbar("Couldn't clear cart", { variant: "error" });
+    }
+  };
 
   return (
-    <main className="w-full">
-      <div className="mx-auto max-w-7xl px-4 sm:px-5 py-5 lg:py-10">
-        <Breadcrumb className="mb-6">
-          <BreadcrumbList>
-            <BreadcrumbItem>
-              <BreadcrumbLink href="/">Home</BreadcrumbLink>
-            </BreadcrumbItem>
-            <BreadcrumbSeparator />
-            <BreadcrumbItem>
-              <BreadcrumbPage>Cart</BreadcrumbPage>
-            </BreadcrumbItem>
-          </BreadcrumbList>
-        </Breadcrumb>
- 
-        {items.length === 0 && (
-          <div className="py-10 text-center">
-            <p className="text-lg font-medium mb-4">Your cart is empty.</p>
-            <Link to="/">
-              <button className="px-6 py-3 border-2 font-medium rounded-sm">
-                Return To Shop
-              </button>
-            </Link>
-          </div>
-        )}
+    <div className="max-w-7xl mx-auto px-4 py-8">
+      <h1 className="text-2xl font-semibold mb-6">Shopping Cart</h1>
 
-        {items.length > 0 && (
-          <> 
-            <section className="hidden md:block w-full overflow-x-auto">
-              <table className="w-full border-separate border-spacing-y-4">
-                <thead>
-                  <tr className="border-b">
-                    <th className="p-4 min-w-[16rem] text-left text-lg text-gray-500 font-medium">
-                      Product
-                    </th>
-                    <th className="p-4 min-w-28 text-left text-lg text-gray-500 font-medium">
-                      Price
-                    </th>
-                    <th className="p-4 min-w-28 text-left text-lg text-gray-500 font-medium">
-                      Quantity
-                    </th>
-                    <th className="p-4 min-w-28 text-left text-lg text-gray-500 font-medium">
-                      Subtotal
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {items.map((item) => {
-                    const name =
-                      item.productName || item.name || item.title || "Product";
-                    const imgSrc = API_Img + '/' + item.image
-                    const price = item.productPrice || item.price || 0;
-                    const qty = item.qty || 1;
-                    const rowTotal = price * qty;
-
-                    return (
-                      <tr key={item.id} className="shadow rounded-sm bg-white">
-                        <td className="p-4">
-                          <div className="flex items-center gap-3">
-                            {imgSrc && (
-                              <img width={54} src={imgSrc} alt={name} />
-                            )}
-                            <p className="text-lg">{name}</p>
-                          </div>
-                        </td>
-                        <td className="p-4 text-lg font-bold">
-                          {formatPrice(price)}
-                        </td>
-                        <td className="p-4 text-lg">
-                          <div className="flex items-center gap-2">
-                            <button
-                              onClick={() => dispatch(decreaseQty(item.id))}
-                              className="px-2 py-1 border rounded-sm"
-                            >
-                              -
-                            </button>
-                            <span className="px-3 min-w-6 text-center">
-                              {qty}
-                            </span>
-                            <button
-                              onClick={() => dispatch(increaseQty(item.id))}
-                              className="px-2 py-1 border rounded-sm"
-                            >
-                              +
-                            </button>
-                            <button
-                              onClick={() => dispatch(removeFromCart(item.id))}
-                              className="px-2 py-1 border rounded-sm text-red-500"
-                            >
-                              ✕
-                            </button>
-                          </div>
-                        </td>
-                        <td className="p-4 text-lg font-bold">
-                          {formatPrice(rowTotal)}
-                        </td>
-                      </tr>
-                    );
-                  })}
-                </tbody>
-              </table>
-            </section>
-
-
-            <section className="md:hidden space-y-4">
-              {items.map((item) => {
-                const name =
-                  item.productName || item.name || item.title || "Product";
-                const imgSrc = API_Img + '/' + item.image
-                const price = item.productPrice || item.price || 0;
-                const qty = item.qty || 1;
-                const rowTotal = price * qty;
-
-                return (
-                  <div
-                    key={item.id}
-                    className="flex flex-col gap-3 rounded-md border bg-white p-4 shadow-sm"
-                  >
-                    <div className="flex items-center gap-3">
-                      {imgSrc && (
-                        <img width={54} src={imgSrc} alt={name} />
-                      )}
-                      <div>
-                        <p className="text-base font-medium">{name}</p>
-                        <p className="text-sm text-gray-500">
-                          {formatPrice(price)}
-                        </p>
-                      </div>
-                    </div>
-
-                    <div className="flex items-center justify-between mt-3">
-                      <div className="flex items-center gap-2">
-                        <button
-                          onClick={() => dispatch(decreaseQty(item.id))}
-                          className="px-2 py-1 border rounded-sm"
-                        >
-                          -
-                        </button>
-                        <span className="px-3 min-w-6 text-center">
-                          {qty}
-                        </span>
-                        <button
-                          onClick={() => dispatch(increaseQty(item.id))}
-                          className="px-2 py-1 border rounded-sm"
-                        >
-                          +
-                        </button>
-                      </div>
-
-                      <button
-                        onClick={() => dispatch(removeFromCart(item.id))}
-                        className="px-2 py-1 border rounded-sm text-red-500 text-sm"
-                      >
-                        ✕ Remove
-                      </button>
-                    </div>
-
-                    <div className="flex items-center justify-between text-base font-semibold mt-2">
-                      <span>Subtotal</span>
-                      <span>{formatPrice(rowTotal)}</span>
-                    </div>
-                  </div>
-                );
-              })}
-            </section>
- 
-            <section className="mt-8 flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
-              <Link to="/">
-                <button className="w-full sm:w-auto px-6 sm:px-10 py-3 sm:py-4 border-2 font-medium rounded-sm">
-                  Return To Shop
-                </button>
-              </Link>
-              <div className="flex flex-col gap-4 sm:flex-row">
-                <button className="w-full sm:w-auto px-6 sm:px-10 py-3 sm:py-4 border-2 font-medium rounded-sm">
-                  Update Cart
-                </button>
-                <button
-                  onClick={() => dispatch(clearCart())}
-                  className="w-full sm:w-auto px-6 sm:px-10 py-3 sm:py-4 border-2 border-[#DB4444] text-[#DB4444] font-medium rounded-sm"
-                >
-                  Remove all
-                </button>
-              </div>
-            </section>
- 
-            <section className="mt-8 flex flex-col gap-6 lg:gap-10 lg:flex-row lg:items-start">
-  
-              <aside className="flex w-full flex-col gap-4 sm:flex-row">
-                <input
-                  type="text"
-                  placeholder="Coupon code"
-                  className="py-3 px-4 sm:px-5 border-2 rounded-sm w-full sm:flex-1"
+      <div className="flex flex-col lg:flex-row gap-8">
+        <div className="flex-1 space-y-4">
+          {productsInCart.map((e) => (
+            <div
+              key={e.id}
+              className="flex gap-4 border rounded-xl p-4 bg-white shadow-sm"
+            >
+              {e.product.image ? (
+                <img
+                  className="w-24 h-24 rounded-md object-cover bg-gray-100"
+                  src={`${API_IMG}/${e.product.image}`}
+                  alt={e.product.productName}
                 />
-                <button className="w-full sm:w-auto px-6 sm:px-10 py-3 sm:py-4 border-2 border-[#DB4444] text-[#DB4444] font-medium rounded-sm">
-                  Apply
-                </button>
-              </aside>
- 
-              <aside className="w-full lg:max-w-sm p-5 gap-4 rounded-sm border-2 border-black flex flex-col">
-                <h1 className="text-xl sm:text-2xl font-medium">Cart Total</h1>
+              ) : (
+                <div className="w-24 h-24 rounded-md bg-gray-100" />
+              )}
 
-                <div className="flex w-full font-medium text-base sm:text-lg justify-between">
-                  <p>Subtotal:</p>
-                  <p>{formatPrice(subtotal)}</p>
+              <div className="flex-1 flex flex-col gap-3">
+                <div className="flex items-start justify-between gap-2">
+                  <div>
+                    <h2 className="font-medium text-lg">
+                      {e.product.productName}
+                    </h2>
+                    <p className="text-xs text-gray-500">
+                      Product ID: {e.product.id}
+                    </p>
+                    <p className="text-xs text-gray-500">
+                      Left in stock: {e.product.quantity}
+                    </p>
+                  </div>
+                  <button
+                    onClick={() => handleDelete(e.id)}
+                    className="text-xs text-red-500 hover:underline"
+                  >
+                    <Trash2 />
+                  </button>
                 </div>
 
-                <div className="flex w-full font-medium text-base sm:text-lg justify-between">
-                  <p>Shipping:</p>
-                  <p>Free</p>
+                <div className="flex items-center justify-between gap-4">
+                  <div className="inline-flex items-center border rounded-full overflow-hidden">
+                    <button
+                      onClick={() => handleDecrease(e.id)}
+                      className="px-3 py-1 text-sm hover:bg-gray-100"
+                    >
+                      -
+                    </button>
+                    <span className="px-4 py-1 text-sm font-medium">
+                      {e.quantity}
+                    </span>
+                    <button
+                      onClick={() => handleIncrease(e.id)}
+                      className="px-3 py-1 text-sm hover:bg-gray-100"
+                    >
+                      +
+                    </button>
+                  </div>
                 </div>
+              </div>
+            </div>
+          ))}
+        </div>
 
-                <hr className="border border-black" />
+        <aside className="w-full lg:w-80 border rounded-xl p-5 bg-gray-50 space-y-4">
+          <h2 className="text-lg font-semibold mb-2">Order Summary</h2>
 
-                <div className="flex w-full font-bold text-lg sm:text-xl justify-between">
-                  <p>Total:</p>
-                  <p>{formatPrice(subtotal)}</p>
-                </div>
+          <div className="flex items-center justify-between text-sm">
+            <span className="text-gray-600">Items</span>
+            <span className="font-medium">{totalProducts}</span>
+          </div>
 
-                <Link to="/checkOut" className="mt-2">
-                  <MainBtn text={"Proceed to checkout"} />
-                </Link>
-              </aside>
-            </section>
-          </>
-        )}
+          <div className="flex items-center justify-between text-sm">
+            <span className="text-gray-600">Total price</span>
+            <span className="font-semibold">${totalPrice}</span>
+          </div>
+
+          <button
+            onClick={() => handleClear(cartData.id)}
+            className="w-full mt-4 py-2 text-sm rounded-md border border-red-500 text-red-600 hover:bg-red-50 transition"
+          >
+            Clear cart
+          </button>
+
+          <Link to={"/checkout"}>
+            <button className="w-full mt-2 py-2 text-sm rounded-md bg-black text-white hover:bg-black/90 transition">
+              Checkout
+            </button>
+          </Link>
+        </aside>
       </div>
-    </main>
+    </div>
   );
 };
 

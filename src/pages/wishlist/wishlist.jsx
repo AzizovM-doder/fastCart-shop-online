@@ -1,14 +1,16 @@
 import Card1 from "../../components/card1";
-import image5 from "../../images/coat.png";
-import image6 from "../../images/bag.png";
-import image7 from "../../images/cpu.png";
-import image8 from "../../images/shit.png";
 import { Link } from "react-router-dom";
-import Card1_2 from "../../components/card1_2";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+import { getProduct } from "../../api/apiProductSlice";
 const Wishlist = () => {
   const items = useSelector((state) => state.wishlistSlice.items || []);
+  const {product} = useSelector((state) => state.productSlice)
 
+  const dispatch = useDispatch();
+  useEffect(()=>{
+    dispatch(getProduct())
+  },[])
 
   return (
     <main>
@@ -37,29 +39,9 @@ const Wishlist = () => {
             </Link>
           </div>
           <div>
-            <Card1_2
-              data={[
-                {
-                  name: "The north coat",
-                  img: image5,
-                  price: 260,
-                },
-                {
-                  name: "Gucci duffle bag",
-                  img: image6,
-                  price: 960,
-                },
-                {
-                  name: "RGB liquid CPU Cooler",
-                  img: image7,
-                  price: 160,
-                },
-                {
-                  name: "Small BookSelf",
-                  img: image8,
-                  price: 360,
-                },
-              ]}
+            <Card1
+              data={product?.toReversed()}
+              slc={4}
             />
           </div>
         </section>

@@ -4,6 +4,8 @@ import productSlice from "./reducers/productSlice";
 import brandSlice from "./reducers/brandSlice";
 import cartSlice from "./reducers/cartSlice";
 import wishlistSlice from "./reducers/wishlistSlice";
+import authSlice from "./reducers/authSlice/authSlice";
+import accountSlice from "./reducers/accountSlice/accountSlice";
 export const store = configureStore({
   reducer: {
     categorySlice,
@@ -11,6 +13,8 @@ export const store = configureStore({
     brandSlice,
     cartSlice,
     wishlistSlice,
+    authSlice,
+    accountSlice
   },
 });
 
