@@ -124,7 +124,13 @@ const Cart = () => {
                 <div className="flex items-center justify-between gap-4">
                   <div className="inline-flex items-center border rounded-full overflow-hidden">
                     <button
-                      onClick={() => handleDecrease(e.id)}
+                      onClick={() => {
+                        if (e.quantity > 1) {
+                          handleDecrease(e.id);
+                        } else {
+                          handleDelete(e.id);
+                        }
+                      }}
                       className="px-3 py-1 text-sm hover:bg-gray-100"
                     >
                       -
