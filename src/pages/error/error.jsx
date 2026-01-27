@@ -6,9 +6,9 @@ import { SearchIcon } from "lucide-react";
 const Error = () => {
   return (
     <div className="min-h-screen flex justify-center flex-col gap-5 items-center">
-      <h1 className="text-9xl flex gap-3 items-center text-[#9999] font-bold text-[12rem]">
-        404
-        <SearchIcon className="w-30 h-30 opacity-60" />
+      <h1 className="text-9xl flex gap-3 text-[#9999] font-bold text-[12rem]">
+        4
+        <SearchIcon className="w-40 h-50 opacity-60" />4
       </h1>
       <p className="text-3xl text-gray-500 font-medium">
         Sorry Page is not found
