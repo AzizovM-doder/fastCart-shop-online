@@ -1,9 +1,13 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import {  axiosRequest } from "../../utils/url";
+import { axiosRequest } from "../../utils/url";
 
 export const getCart = createAsyncThunk("cartSlice/getCart", async () => {
-  const { data } = await axiosRequest("Cart/get-products-from-cart");
-  return data;
+  try {
+    const { data } = await axiosRequest("Cart/get-products-from-cart");
+    return data;
+  } catch (error) {
+    console.error(error);
+  }
 });
 
 export const postToCart = createAsyncThunk(

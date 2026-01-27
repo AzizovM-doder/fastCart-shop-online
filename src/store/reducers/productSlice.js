@@ -10,9 +10,12 @@ export const productSlice = createSlice({
   reducers: {},
   extraReducers : (builder) =>{
     builder.addCase(getProduct.fulfilled , (state, actions) =>{
-        state.product = actions.payload.products
+        state.product = actions.payload?.products
         state.data = actions.payload
-        state.user = actions.payload.data
+        state.user = actions.payload?.data
+    })
+    builder.addCase(getProduct.rejected , (state, actions) =>{
+       console.log(actions.payload)
     })
   }
 })

@@ -10,7 +10,7 @@ import {
 } from "../../api/cartAPI/cartAPI";
 import { API_IMG } from "../../utils/url";
 import { Link } from "react-router-dom";
-import { Trash2 } from "lucide-react";
+import { HandMetalIcon, Trash2 } from "lucide-react";
 
 const Cart = () => {
   const dispatch = useDispatch();
@@ -85,70 +85,87 @@ const Cart = () => {
 
       <div className="flex flex-col lg:flex-row gap-8">
         <div className="flex-1 space-y-4">
-          {productsInCart.map((e) => (
-            <div
-              key={e.id}
-              className="flex gap-4 border rounded-xl p-4 bg-white shadow-sm"
-            >
-              {e.product.image ? (
-                <img
-                  className="w-24 h-24 rounded-md object-cover bg-gray-100"
-                  src={`${API_IMG}/${e.product.image}`}
-                  alt={e.product.productName}
-                />
-              ) : (
-                <div className="w-24 h-24 rounded-md bg-gray-100" />
-              )}
+          {productsInCart.length > 0 ? (
+            productsInCart?.map((e) => (
+              <div
+                key={e.id}
+                className="flex gap-4 border rounded-xl p-4 bg-white shadow-sm"
+              >
+                {e.product.image ? (
+                  <img
+                    className="w-24 h-24 rounded-md object-cover bg-gray-100"
+                    src={`${API_IMG}/${e.product.image}`}
+                    alt={e.product.productName}
+                  />
+                ) : (
+                  <div className="w-24 h-24 rounded-md bg-gray-100" />
+                )}
 
-              <div className="flex-1 flex flex-col gap-3">
-                <div className="flex items-start justify-between gap-2">
-                  <div>
-                    <h2 className="font-medium text-lg">
-                      {e.product.productName}
-                    </h2>
-                    <p className="text-xs text-gray-500">
-                      Product ID: {e.product.id}
-                    </p>
-                    <p className="text-xs text-gray-500">
-                      Left in stock: {e.product.quantity}
-                    </p>
+                <div className="flex-1 flex flex-col gap-3">
+                  <div className="flex items-start justify-between gap-2">
+                    <div>
+                      <h2 className="font-medium text-lg">
+                        {e.product.productName}
+                      </h2>
+                      <p className="text-xs text-gray-500">
+                        Product ID: {e.product.id}
+                      </p>
+                      <p className="text-xs text-gray-500">
+                        Left in stock: {e.product.quantity}
+                      </p>
+                    </div>
+                    <button
+                      onClick={() => handleDelete(e.id)}
+                      className="text-xs text-red-500 hover:underline"
+                    >
+                      <Trash2 />
+                    </button>
                   </div>
-                  <button
-                    onClick={() => handleDelete(e.id)}
-                    className="text-xs text-red-500 hover:underline"
-                  >
-                    <Trash2 />
-                  </button>
-                </div>
 
-                <div className="flex items-center justify-between gap-4">
-                  <div className="inline-flex items-center border rounded-full overflow-hidden">
-                    <button
-                      onClick={() => {
-                        if (e.quantity > 1) {
-                          handleDecrease(e.id);
-                        } else {
-                          handleDelete(e.id);
-                        }
-                      }}
-                      className="px-3 py-1 text-sm hover:bg-gray-100"
-                    >
-                      -
-                    </button>
-                    <span className="px-4 py-1 text-sm font-medium">
-                      {e.quantity}
-                    </span>
-                    <button
-                      onClick={() => handleIncrease(e.id)}
-                      className="px-3 py-1 text-sm hover:bg-gray-100"
-                    >
-                      +
-                    </button>
+                  <div className="flex items-center justify-between gap-4">
+                    <div className="inline-flex items-center border rounded-full overflow-hidden">
+                      <button
+                        onClick={() => {
+                          if (e.quantity > 1) {
+                            handleDecrease(e.id);
+                          } else {
+                            handleDelete(e.id);
+                          }
+                        }}
+                        className="px-3 py-1 text-sm hover:bg-gray-100"
+                      >
+                        -
+                      </button>
+                      <span className="px-4 py-1 text-sm font-medium">
+                        {e.quantity}
+                      </span>
+                      <button
+                        onClick={() => handleIncrease(e.id)}
+                        className="px-3 py-1 text-sm hover:bg-gray-100"
+                      >
+                        +
+                      </button>
+                    </div>
                   </div>
                 </div>
               </div>
+            ))
+          ) : (
+            <div className="flex flex-col items-center justify-center gap-4 py-20 text-center">
+              <HandMetalIcon width={200} height={200} />
+              <h3 className="text-xl font-semibold">
+                Cart lookin' dry right now
+              </h3>
+              <p className="text-sm opacity-60 max-w-xs">
+                Add somethin' in here before you dip out, ya feel me
+              </p>
+              <Link to={"/products"}>
+                <button className="px-4 py-2 rounded-md bg-black text-white mt-2">
+                  Go Shopping
+                </button>
+              </Link>
             </div>
-          ))}
+          )}
         </div>
 
         <aside className="w-full lg:w-80 border rounded-xl p-5 bg-gray-50 space-y-4">
