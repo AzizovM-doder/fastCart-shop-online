@@ -39,6 +39,8 @@ const Account = () => {
     formData.append("PhoneNumber", e.target["phoneNumber"].value);
     formData.append("Dob", e.target["dob"].value);
     dispatch(putUpdateUser(formData));
+    e.target.reset()
+    window.location = '/account'
   };
 
   useEffect(() => {
