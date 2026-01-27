@@ -4,7 +4,7 @@ import { Checkbox, Rating } from "@mui/material";
 import FavoriteBorder from "@mui/icons-material/FavoriteBorder";
 import Favorite from "@mui/icons-material/Favorite";
 import { Eye, ShoppingCart } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import W from "./w";
 import { API_Img } from "../api/apiBrandSlice";
 import { useDispatch, useSelector } from "react-redux";
@@ -13,10 +13,13 @@ import { postToCart } from "../api/cartAPI/cartAPI";
 
 const Card1 = ({ data, s, slc }) => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const wishlist = useSelector(
     (state) => state.wishlist?.items || state.wishlistSlice?.items || [],
   );
-
+  const token = localStorage.getItem("token");
+  console.log(token);
+  
   return (
     <div className="grid lg:grid-cols-4 gap-5">
       {data?.slice(s || 0, slc || data.length).map((e) => {
@@ -64,7 +67,14 @@ const Card1 = ({ data, s, slc }) => {
               <img width={180} src={`${API_Img}/${e.image}`} alt={e.name} />
 
               <button
-                onClick={() => dispatch(postToCart(e.id))}
+                onClick={() => {
+                  if (token) {
+                    dispatch(postToCart(e.id));
+                  }
+                  else{
+                    navigate('/signUp')
+                  }
+                }}
                 className="absolute bottom-0 left-0 w-full py-3 flex items-center justify-center bg-black text-white opacity-0 translate-y-3 transition-all duration-300 group-hover:opacity-100 group-hover:translate-y-0"
               >
                 <ShoppingCart />
