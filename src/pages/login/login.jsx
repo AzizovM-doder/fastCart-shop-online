@@ -30,7 +30,7 @@ const Login = () => {
         localStorage.setItem("token", res.token);
       }
 
-      navigate("/");
+      window.location = '/'
     } catch (err) {
       enqueueSnackbar(err?.message || "Login failed", {
         variant: "error",

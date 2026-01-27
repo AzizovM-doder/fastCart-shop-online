@@ -120,7 +120,7 @@ const Nav = () => {
           >
             About
           </NavLink>
-          {token.length < 10 ?  (
+          {token.length < 10 ? (
             <NavLink
               className={({ isActive }) =>
                 isActive ? "border-b-[#B3B3B3]" : "border-b-[#00000000]"
@@ -142,99 +142,103 @@ const Nav = () => {
           ) : null}
         </ul>
 
-        <div className="hidden lg:flex items-center gap-10">
-          <div className="flex gap-5 items-center">
-            <NavLink
-              className={({ isActive }) =>
-                isActive ? "text-red-500" : "text-black"
-              }
-              to={"wishlist"}
-            >
-              <Heart />
-            </NavLink>
-            <NavLink
-              className={({ isActive }) =>
-                isActive ? "text-yellow-500" : "text-black"
-              }
-              to={"cart"}
-            >
-              <IconButton aria-label="cart">
-                <StyledBadge badgeContent={totalProducts} color="secondary">
-                  <ShoppingCartIcon />
-                </StyledBadge>
-              </IconButton>
-            </NavLink>
-            <button
-              onClick={handleClick}
-              className="rounded-full p-1 hover:bg-gray-100 focus:outline-none"
-              aria-controls={open ? "account-menu" : undefined}
-              aria-haspopup="true"
-              aria-expanded={open ? "true" : undefined}
-            >
-              <User />
-            </button>
+        {token.length > 1 ? (
+          <div className="hidden lg:flex items-center gap-10">
+            <div className="flex gap-5 items-center">
+              <NavLink
+                className={({ isActive }) =>
+                  isActive ? "text-red-500" : "text-black"
+                }
+                to={"wishlist"}
+              >
+                <Heart />
+              </NavLink>
+              <NavLink
+                className={({ isActive }) =>
+                  isActive ? "text-yellow-500" : "text-black"
+                }
+                to={"cart"}
+              >
+                <IconButton aria-label="cart">
+                  <StyledBadge badgeContent={totalProducts} color="secondary">
+                    <ShoppingCartIcon />
+                  </StyledBadge>
+                </IconButton>
+              </NavLink>
+              <button
+                onClick={handleClick}
+                className="rounded-full p-1 hover:bg-gray-100 focus:outline-none"
+                aria-controls={open ? "account-menu" : undefined}
+                aria-haspopup="true"
+                aria-expanded={open ? "true" : undefined}
+              >
+                <User />
+              </button>
 
-            <Menu
-              anchorEl={anchorEl}
-              id="account-menu"
-              open={open}
-              onClose={handleClose}
-              onClick={handleClose}
-              slotProps={{
-                paper: {
-                  elevation: 0,
-                  sx: {
-                    overflow: "visible",
-                    filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
-                    mt: 1.5,
-                    "& .MuiAvatar-root": {
-                      width: 32,
-                      height: 32,
-                      ml: -0.5,
-                      mr: 1,
-                    },
-                    "&::before": {
-                      content: '""',
-                      display: "block",
-                      position: "absolute",
-                      top: 0,
-                      right: 14,
-                      width: 10,
-                      height: 10,
-                      bgcolor: "background.paper",
-                      transform: "translateY(-50%) rotate(45deg)",
-                      zIndex: 0,
+              <Menu
+                anchorEl={anchorEl}
+                id="account-menu"
+                open={open}
+                onClose={handleClose}
+                onClick={handleClose}
+                slotProps={{
+                  paper: {
+                    elevation: 0,
+                    sx: {
+                      overflow: "visible",
+                      filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
+                      mt: 1.5,
+                      "& .MuiAvatar-root": {
+                        width: 32,
+                        height: 32,
+                        ml: -0.5,
+                        mr: 1,
+                      },
+                      "&::before": {
+                        content: '""',
+                        display: "block",
+                        position: "absolute",
+                        top: 0,
+                        right: 14,
+                        width: 10,
+                        height: 10,
+                        bgcolor: "background.paper",
+                        transform: "translateY(-50%) rotate(45deg)",
+                        zIndex: 0,
+                      },
                     },
                   },
-                },
-              }}
-              transformOrigin={{ horizontal: "right", vertical: "top" }}
-              anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
-            >
-              <Link to={"/account"}>
+                }}
+                transformOrigin={{ horizontal: "right", vertical: "top" }}
+                anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
+              >
+                <Link to={"/account"}>
+                  <MenuItem onClick={handleClose}>
+                    <User /> Account
+                  </MenuItem>
+                </Link>
                 <MenuItem onClick={handleClose}>
-                  <User /> Account
+                  <ListItemIcon>
+                    <Settings />
+                  </ListItemIcon>
+                  Settings
                 </MenuItem>
-              </Link>
-              <MenuItem onClick={handleClose}>
-                <ListItemIcon>
-                  <Settings />
-                </ListItemIcon>
-                Settings
-              </MenuItem>
-              <Divider />
-              <MenuItem onClick={() =>{
-                handleClose()
-                localStorage.removeItem('token')
-              }}>
-                <ListItemIcon>
-                  <LogOut />
-                </ListItemIcon>
-                Logout
-              </MenuItem>
-            </Menu>
+                <Divider />
+                <MenuItem
+                  onClick={() => {
+                    handleClose();
+                    localStorage.removeItem("token");
+                  }}
+                >
+                  <ListItemIcon>
+                    <LogOut />
+                  </ListItemIcon>
+                  Logout
+                </MenuItem>
+              </Menu>
+            </div>
           </div>
-        </div>
+        ) : null}
       </div>
     </nav>
   );
