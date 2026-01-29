@@ -217,13 +217,6 @@ const Nav = () => {
                     <User /> Account
                   </MenuItem>
                 </Link>
-                <MenuItem onClick={handleClose}>
-                  <ListItemIcon>
-                    <Settings />
-                  </ListItemIcon>
-                  Settings
-                </MenuItem>
-                <Divider />
                 <MenuItem
                   onClick={() => {
                     handleClose();

@@ -7,11 +7,9 @@ import { store } from "./store/store.js";
 import { SnackbarProvider } from "notistack";
 
 createRoot(document.getElementById("root")).render(
-  <StrictMode>
     <Provider store={store}>
       <SnackbarProvider maxSnack={4}>
         <App />
       </SnackbarProvider>
     </Provider>
-  </StrictMode>,
 );

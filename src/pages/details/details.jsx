@@ -11,7 +11,7 @@ import FavoriteBorder from "@mui/icons-material/FavoriteBorder";
 import Favorite from "@mui/icons-material/Favorite";
 import Rating from "@mui/material/Rating";
 import { Button } from "@/components/ui/button";
-import { Heart, ShoppingCartIcon } from "lucide-react";
+import { ShoppingCartIcon } from "lucide-react";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getProductById } from "../../api/apiProductSlice";
@@ -26,22 +26,23 @@ const Details = () => {
   const { user } = useSelector((store) => store.productSlice);
 
   const images = user?.images || [];
-  const [activeIndex, setActiveIndex] = useState(images.at(-1));
+  const [activeIndex, setActiveIndex] = useState(0);
+
   const wishlist = useSelector(
-    (state) => state.wishlist?.items || state.wishlistSlice?.items || [],
+    (state) => state.wishlist?.items || state.wishlistSlice?.items || []
   );
+
   const checked = wishlist.some((elem) => elem.id === user?.id);
+
   useEffect(() => {
     if (id) dispatch(getProductById(id));
   }, [dispatch, id]);
 
   useEffect(() => {
-    if (images.length) {
-      setActiveIndex(images.length - 1);
-    }
-  }, [images.length]);
+    if (images.length) setActiveIndex(images.length - 1);
+  }, [images]);
 
-  const activeImage = images[activeIndex]?.images;
+  const activeImage = images?.[activeIndex]?.images;
 
   return (
     <main className="min-h-110 py-10 from-slate-50 to-white">
@@ -61,9 +62,7 @@ const Details = () => {
             </BreadcrumbItem>
             <BreadcrumbSeparator />
             <BreadcrumbItem>
-              <BreadcrumbPage>
-                {user?.productName || "Loading..."}
-              </BreadcrumbPage>
+              <BreadcrumbPage>{user?.productName || "Loading..."}</BreadcrumbPage>
             </BreadcrumbItem>
           </BreadcrumbList>
         </Breadcrumb>
@@ -120,13 +119,12 @@ const Details = () => {
                   <span>({user?.quantity || 0} in stock)</span>
                 </div>
               </div>
+
               <div className="flex flex-col items-end gap-2">
                 <span className="text-xs text-slate-500">Color</span>
                 <div
                   className="w-6 h-6 rounded-full border border-slate-200 shadow-inner"
-                  style={{
-                    background: user?.color || "#111827",
-                  }}
+                  style={{ background: user?.color || "#111827" }}
                 />
               </div>
             </div>
@@ -136,33 +134,34 @@ const Details = () => {
                 <h2 className="text-3xl font-bold text-emerald-500">
                   ${user?.price}
                 </h2>
+
                 {user?.hasDiscount ? (
                   <div className="flex flex-col gap-1">
                     <span className="text-sm line-through text-slate-400">
-                      ${user?.discountPrice + user.price}
+                      ${Number(user?.price || 0) + Number(user?.discountPrice || 0)}
                     </span>
                     <span className="inline-flex items-center rounded-full bg-red-50 px-3 py-1 text-xs font-semibold text-red-600 border border-red-100">
                       -
                       {Math.round(
-                        ((user.discountPrice || 0) /
-                          (user.price + (user.discountPrice || 0))) *
-                          100,
+                        ((Number(user?.discountPrice || 0)) /
+                          (Number(user?.price || 0) + Number(user?.discountPrice || 0))) *
+                          100
                       )}
                       %
                     </span>
                   </div>
                 ) : null}
               </div>
+
               <p className="text-sm text-slate-500 leading-relaxed max-w-xl">
-                {user?.description ||
-                  "No description provided for this product yet."}
+                {user?.description || "No description provided for this product yet."}
               </p>
             </div>
 
             <div className="border-t border-slate-100 pt-4 space-y-4">
               <div className="flex gap-3 pt-2">
                 <Button
-                onClick={dispatch(postToCart(id))}
+                  onClick={() => dispatch(postToCart(id))}
                   className="flex-1 py-3 flex justify-center gap-3"
                   variant="destructive"
                   size="lg"
@@ -170,13 +169,13 @@ const Details = () => {
                   <ShoppingCartIcon />
                   Add To Cart
                 </Button>
-                  {" "}
-                  <Checkbox
-                    icon={<FavoriteBorder style={{ color: "black" }} />}
-                    checkedIcon={<Favorite style={{ color: "red" }} />}
-                    checked={checked}
-                    onClick={() => dispatch(addToWishlist(user))}
-                  />
+
+                <Checkbox
+                  icon={<FavoriteBorder style={{ color: "black" }} />}
+                  checkedIcon={<Favorite style={{ color: "red" }} />}
+                  checked={checked}
+                  onClick={() => dispatch(addToWishlist(user))}
+                />
               </div>
             </div>
 

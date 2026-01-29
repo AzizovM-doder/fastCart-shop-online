@@ -1,5 +1,4 @@
-import React from "react";
-import MainBtn from "../../components/mainBtn";
+import React, { useEffect } from "react";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -9,16 +8,74 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 import { Checkbox } from "@/components/ui/checkbox";
-import joystick from "../../images/joystick.png";
-import monitor from "../../images/monitor.png";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { BadgeDollarSignIcon } from "lucide-react";
+import { BadgeDollarSignIcon, ShoppingCart } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { useDispatch, useSelector } from "react-redux";
+import { getCart } from "../../api/cartAPI/cartAPI";
+import { API_IMG } from "../../utils/url";
+import toast from "react-hot-toast";
+
 const CheckOut = () => {
+  const dispatch = useDispatch();
+  const { cart } = useSelector((s) => s.cartSlice);
+  const cartData = cart?.[0];
+
+  useEffect(() => {
+    dispatch(getCart());
+  }, [dispatch]);
+
+  const products = cartData?.productsInCart || [];
+  const total = cartData?.totalPrice || 0;
+  const totalProducts = cartData?.totalProducts || 0;
+
+  const onSubmit = async (e) => {
+    e.preventDefault();
+
+    const firstName = e.target.firstName.value;
+    const lastName = e.target.lastName.value;
+    const address = e.target.address.value;
+    const city = e.target.city.value;
+    const phone = e.target.phone.value;
+    const email = e.target.email.value;
+
+    const itemsText = products
+      .map(
+        (p) =>
+          `• ${p.product.productName} x${p.quantity} = $${
+            p.product.price * p.quantity
+          }`,
+      )
+      .join("\n");
+
+    const text = `
+<b>New Order</b>
+Name: ${firstName} ${lastName}
+Phone: ${phone}
+Email: ${email}
+Address: ${address}, ${city}
+
+Items:
+${itemsText}
+
+Total: $${total}
+`;
+
+    await fetch("http://localhost:5050/api/telegram", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ text }),
+    });
+    toast.success("Check out proceed!")
+    e.target.reset();
+  };
+
   return (
-    <main>
-      <section className="max-w-7xl m-auto p-5">
-        <Breadcrumb className="-mr-10">
+    <main className="min-h-screen">
+      <section className="max-w-7xl mx-auto px-4 lg:px-6 pt-8">
+        <Breadcrumb>
           <BreadcrumbList>
             <BreadcrumbItem>
               <BreadcrumbLink href="/">Home</BreadcrumbLink>
@@ -34,120 +91,115 @@ const CheckOut = () => {
           </BreadcrumbList>
         </Breadcrumb>
       </section>
-      <section className="max-w-7xl flex flex-col gap-5 lg:flex-row lg:justify-between m-auto p-5">
-        <aside className="lg:w-150">
-          <h1 className="text-4xl font-medium py-5">Billing Details</h1>
-          <div className="shadow-sm w-full p-5 flex flex-col gap-5">
-            <div className="flex flex-col gap-5">
-              <input
-                type="text"
-                placeholder="First Name"
-                className="py-3 px-5 border-2 rounded-sm w-full"
-              />
-              <input
-                type="text"
-                placeholder="Last Name"
-                className="py-3 px-5 w-full border-2 rounded-sm"
-              />
-              <input
-                type="text"
-                placeholder="Street address"
-                className="py-3 px-5 w-full border-2 rounded-sm"
-              />
-              <input
-                type="text"
-                placeholder="Apartment, floor, etc. (optional)"
-                className="py-3 px-5 border-2 rounded-sm w-full"
-              />
-              <input
-                type="text"
-                placeholder="Town/City"
-                className="py-3 px-5 border-2 rounded-sm w-full"
-              />
-              <input
-                type="tel"
-                placeholder="Phone number"
-                className="py-3 px-5 w-full border-2 rounded-sm"
-              />
-              <input
-                type="email"
-                placeholder="Email address"
-                className="py-3 px-5 w-full border-2 rounded-sm"
-              />
-              <div className="flex gap-3 lg:justify-between">
-                <Checkbox
-                  id="terms-checkbox"
-                  defaultChecked
-                  name="terms-checkbox"
-                />
-                <Label htmlFor="terms-checkbox">
-                  Save this information for faster check-out next time
-                </Label>
-              </div>
-            </div>
+
+      <form
+        onSubmit={onSubmit}
+        className="max-w-7xl mx-auto px-4 lg:px-6 py-10 grid gap-8 lg:grid-cols-[3fr_2fr]"
+      >
+        <aside className="bg-white border border-slate-100 shadow-sm rounded-2xl p-6 space-y-4">
+          <h1 className="text-2xl font-semibold">Billing Details</h1>
+
+          <Input name="firstName" placeholder="First name" required />
+          <Input name="lastName" placeholder="Last name" required />
+          <Input name="address" placeholder="Street address" required />
+          <Input name="city" placeholder="City" required />
+          <Input name="phone" placeholder="Phone" required />
+          <Input name="email" placeholder="Email" required />
+
+          <div className="flex items-center gap-3">
+            <Checkbox id="save" defaultChecked />
+            <Label htmlFor="save" className="text-sm text-slate-600">
+              Save info for next time
+            </Label>
           </div>
         </aside>
-        <aside className="lg:w-100">
-          <div className="w-full p-5 flex flex-col gap-5">
-            <div className="flex flex-col gap-5">
-              <div className="font-medium flex justify-between items-center">
-                <div className="flex gap-3 items-center">
-                  <img width={34} src={joystick} alt="m" />
-                  <p>H1 Joystick</p>
-                </div>
-                <p>$649</p>
-              </div>
-              <div className="font-medium flex justify-between items-center">
-                <div className="flex gap-3 items-center">
-                  <img width={34} src={monitor} alt="m" />
-                  <p>H1 Gamepad</p>
-                </div>
-                <p>$1159</p>
-              </div>
-              <div className="flex justify-between items-center">
-                <p>Subtotal:</p>
-                <p>$1750</p>
-              </div>
-              <div className="flex justify-between items-center">
-                <p>Shipping:</p>
-                <p>Free</p>
-              </div>
-              <hr />
-              <div className="flex font-bold text-xl justify-between items-center">
-                <p>Total:</p>
-                <p>$1750</p>
-              </div>
-              <RadioGroup defaultValue="option-two">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-3">
 
-                  <RadioGroupItem value="option-one" id="option-one" />
-                  <Label htmlFor="option-one">Bank</Label>
-                  </div>
-                  <div>
-                    <BadgeDollarSignIcon/>
-                  </div>
-                </div>
+        <aside className="bg-white border border-slate-100 shadow-sm rounded-2xl p-6 space-y-6 h-fit">
+          <div className="flex justify-between items-center">
+            <h2 className="text-lg font-semibold">Order Summary</h2>
+            <span className="text-xs text-slate-500">
+              {totalProducts} items
+            </span>
+          </div>
+
+          {!products.length && (
+            <div className="flex flex-col items-center gap-4 py-10 text-center border rounded-xl bg-slate-50">
+              <ShoppingCart className="w-10 h-10 opacity-60" />
+              <p className="text-sm text-slate-500">Your cart is empty</p>
+            </div>
+          )}
+
+          <div className="space-y-4">
+            {products.map((e) => (
+              <div
+                key={e.id}
+                className="flex items-center justify-between gap-3"
+              >
                 <div className="flex items-center gap-3">
-                  <RadioGroupItem value="option-two" id="option-two" />
-                  <Label htmlFor="option-two">Cash on delivery</Label>
-                </div>
-              </RadioGroup>
-              <div className="shadow p-5 gap-5 flex flex-col lg:flex-row rounded-2xl">
-                
-              <input
-                type="text"
-                placeholder="Coupon Code"
-                className="py-3 px-5 w-full border-2 rounded-sm"
-              />
-              <MainBtn text={'Apply'}/>
-              </div>
-              <MainBtn text={'Place Order'}/>
+                  <div className="w-11 h-11 rounded-xl bg-slate-50 border flex items-center justify-center overflow-hidden">
+                    {e.product.image && (
+                      <img
+                        src={`${API_IMG}/${e.product.image}`}
+                        className="w-full h-full object-cover"
+                      />
+                    )}
+                  </div>
 
+                  <div>
+                    <p className="text-sm font-medium">
+                      {e.product.productName}
+                    </p>
+                    <p className="text-xs text-slate-500">Qty: {e.quantity}</p>
+                  </div>
+                </div>
+
+                <p className="text-sm font-semibold">
+                  ${e.product.price * e.quantity}
+                </p>
+              </div>
+            ))}
+          </div>
+
+          <div className="border-t pt-4 space-y-2 text-sm">
+            <div className="flex justify-between">
+              <span className="text-slate-600">Subtotal</span>
+              <span>${total}</span>
+            </div>
+            <div className="flex justify-between">
+              <span className="text-slate-600">Shipping</span>
+              <span className="text-emerald-600">Free</span>
+            </div>
+            <div className="flex justify-between font-semibold text-base">
+              <span>Total</span>
+              <span>${total}</span>
             </div>
           </div>
+
+          <RadioGroup defaultValue="cash" className="space-y-3">
+            <div className="flex justify-between border p-3 rounded-xl">
+              <div className="flex gap-3 items-center">
+                <RadioGroupItem value="bank" id="bank" />
+                <Label htmlFor="bank">Bank</Label>
+              </div>
+              <BadgeDollarSignIcon className="w-5 h-5" />
+            </div>
+
+            <div className="flex gap-3 items-center border p-3 rounded-xl">
+              <RadioGroupItem value="cash" id="cash" />
+              <Label htmlFor="cash">Cash on delivery</Label>
+            </div>
+          </RadioGroup>
+
+          <div className="flex gap-3">
+            <Input placeholder="Coupon code" />
+            <Button type="button">Apply</Button>
+          </div>
+
+          <Button type="submit" className="w-full py-6 text-base font-semibold">
+            Place Order
+          </Button>
         </aside>
-      </section>
+      </form>
     </main>
   );
 };
