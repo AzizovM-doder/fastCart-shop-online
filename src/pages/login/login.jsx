@@ -1,7 +1,6 @@
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { useSnackbar } from "notistack";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { Loader2 } from "lucide-react";
 import { loginUser } from "../../api/authAPI/authAPI";
@@ -9,7 +8,6 @@ import { loginUser } from "../../api/authAPI/authAPI";
 const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { enqueueSnackbar } = useSnackbar();
   const { loading } = useSelector((store) => store.authSlice);
 
   const confirmLoginUser = async (e) => {
@@ -22,19 +20,12 @@ const Login = () => {
     try {
       const res = await dispatch(loginUser(loginRequestData)).unwrap();
 
-      enqueueSnackbar(res?.message || "Logged in successfully", {
-        variant: "success",
-      });
-
       if (res?.token) {
         localStorage.setItem("token", res.token);
       }
-
-      window.location = '/'
+      window.location = "/";
     } catch (err) {
-      enqueueSnackbar(err?.message || "Login failed", {
-        variant: "error",
-      });
+      console.error(err);
     }
   };
 

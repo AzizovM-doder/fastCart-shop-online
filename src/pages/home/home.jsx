@@ -1,5 +1,5 @@
 import { Circle } from "lucide-react";
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import AutoSwiper from "../../components/swiper";
 import Card1 from "../../components/card1";
 import jbl from "../../images/jbl.png";
@@ -15,7 +15,7 @@ import MainBtn from "../../components/mainBtn";
 import { Link, useNavigate } from "react-router-dom";
 import Card2 from "../../components/card2";
 import { useDispatch, useSelector } from "react-redux";
-import { API_Img, getBrands } from "../../api/apiBrandSlice.js";
+import { API_Img } from "../../api/apiBrandSlice.js";
 import { getCategory } from "../../api/apiCategory.js";
 import { getProduct } from "../../api/apiProductSlice.js";
 const Home = () => {
