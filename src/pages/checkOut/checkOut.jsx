@@ -17,12 +17,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { getCart } from "../../api/cartAPI/cartAPI";
 import { API_IMG } from "../../utils/url";
 import toast from "react-hot-toast";
+import axios from "axios";
 
 const CheckOut = () => {
   const dispatch = useDispatch();
   const { cart } = useSelector((s) => s.cartSlice);
   const cartData = cart?.[0];
-
+  const token = "8028679469:AAEPMDeBumGJjy_z8Hvfd5zIvUZ5xbGuMCk";
+  const chatId = "8030302693";
   useEffect(() => {
     dispatch(getCart());
   }, [dispatch]);
@@ -40,7 +42,6 @@ const CheckOut = () => {
     const city = e.target.city.value;
     const phone = e.target.phone.value;
     const email = e.target.email.value;
-
     const itemsText = products
       .map(
         (p) =>
@@ -49,27 +50,31 @@ const CheckOut = () => {
           }`,
       )
       .join("\n");
+    try {
+      const message = `
+ Новая заявка:
+ Имя: ${(firstName, lastName)}
+ address: ${address}
+ Телефон: ${phone}
+ city : ${city}
+ email: ${email}
+ itemsText : ${itemsText}
+      `;
+      await axios.post(
+        `https://api.telegram.org/bot${token}/sendMessage?chat_id=${chatId}&text=${encodeURIComponent(
+          message,
+        )}`,
+        {
+          chat_id: chatId,
+          text: message,
+        },
+      );
 
-    const text = `
-<b>New Order</b>
-Name: ${firstName} ${lastName}
-Phone: ${phone}
-Email: ${email}
-Address: ${address}, ${city}
-
-Items:
-${itemsText}
-
-Total: $${total}
-`;
-
-    await fetch("http://localhost:5050/api/telegram", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ text }),
-    });
-    toast.success("Check out proceed!")
-    e.target.reset();
+      toast.success("GOOD JOB!");
+    } catch (error) {
+      console.log("Error sending message:", error);
+      toast.error("BAD WORK!!");
+    }
   };
 
   return (
