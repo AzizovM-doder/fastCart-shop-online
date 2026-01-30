@@ -12,24 +12,26 @@ import Favorite from "@mui/icons-material/Favorite";
 import Rating from "@mui/material/Rating";
 import { Button } from "@/components/ui/button";
 import { ShoppingCartIcon } from "lucide-react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getProductById } from "../../api/apiProductSlice";
 import { API_IMG } from "../../utils/url";
 import { Checkbox } from "@mui/material";
 import { addToWishlist } from "../../store/reducers/wishlistSlice";
 import { postToCart } from "../../api/cartAPI/cartAPI";
+import toast from "react-hot-toast";
 
 const Details = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { user } = useSelector((store) => store.productSlice);
 
   const images = user?.images || [];
   const [activeIndex, setActiveIndex] = useState(0);
 
   const wishlist = useSelector(
-    (state) => state.wishlist?.items || state.wishlistSlice?.items || []
+    (state) => state.wishlist?.items || state.wishlistSlice?.items || [],
   );
 
   const checked = wishlist.some((elem) => elem.id === user?.id);
@@ -62,7 +64,9 @@ const Details = () => {
             </BreadcrumbItem>
             <BreadcrumbSeparator />
             <BreadcrumbItem>
-              <BreadcrumbPage>{user?.productName || "Loading..."}</BreadcrumbPage>
+              <BreadcrumbPage>
+                {user?.productName || "Loading..."}
+              </BreadcrumbPage>
             </BreadcrumbItem>
           </BreadcrumbList>
         </Breadcrumb>
@@ -138,14 +142,17 @@ const Details = () => {
                 {user?.hasDiscount ? (
                   <div className="flex flex-col gap-1">
                     <span className="text-sm line-through text-slate-400">
-                      ${Number(user?.price || 0) + Number(user?.discountPrice || 0)}
+                      $
+                      {Number(user?.price || 0) +
+                        Number(user?.discountPrice || 0)}
                     </span>
                     <span className="inline-flex items-center rounded-full bg-red-50 px-3 py-1 text-xs font-semibold text-red-600 border border-red-100">
                       -
                       {Math.round(
-                        ((Number(user?.discountPrice || 0)) /
-                          (Number(user?.price || 0) + Number(user?.discountPrice || 0))) *
-                          100
+                        (Number(user?.discountPrice || 0) /
+                          (Number(user?.price || 0) +
+                            Number(user?.discountPrice || 0))) *
+                          100,
                       )}
                       %
                     </span>
@@ -154,7 +161,8 @@ const Details = () => {
               </div>
 
               <p className="text-sm text-slate-500 leading-relaxed max-w-xl">
-                {user?.description || "No description provided for this product yet."}
+                {user?.description ||
+                  "No description provided for this product yet."}
               </p>
             </div>
 
@@ -174,7 +182,9 @@ const Details = () => {
                   icon={<FavoriteBorder style={{ color: "black" }} />}
                   checkedIcon={<Favorite style={{ color: "red" }} />}
                   checked={checked}
-                  onClick={() => dispatch(addToWishlist(user))}
+                  onClick={() => {
+                    localStorage.getItem("token").length > 10 ? dispatch(addToWishlist(user)) : navigate("/login")
+                  }}
                 />
               </div>
             </div>
