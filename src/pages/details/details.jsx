@@ -183,7 +183,7 @@ const Details = () => {
                   checkedIcon={<Favorite style={{ color: "red" }} />}
                   checked={checked}
                   onClick={() => {
-                    localStorage.getItem("token").length > 10 ? dispatch(addToWishlist(user)) : navigate("/login")
+                    localStorage.getItem("token").length || ''.length > 10 ? dispatch(addToWishlist(user)) : navigate("/login")
                   }}
                 />
               </div>
