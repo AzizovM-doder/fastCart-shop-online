@@ -85,7 +85,7 @@ const Products = () => {
               onChange={(e) =>
                 setParams((prev) => ({
                   ...prev,
-                  productName: e.target.value,
+                  productName: e.target.value.toLowerCase().trim(),
                   pageNumber: 1,
                 }))
               }

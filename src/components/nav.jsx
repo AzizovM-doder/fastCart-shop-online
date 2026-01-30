@@ -175,7 +175,6 @@ const Nav = () => {
               >
                 <User />
               </button>
-              <ModeToggle />
               <Menu
                 anchorEl={anchorEl}
                 id="account-menu"
@@ -233,6 +232,8 @@ const Nav = () => {
             </div>
           </div>
         ) : null}
+              <ModeToggle />
+
       </div>
     </nav>
   );
