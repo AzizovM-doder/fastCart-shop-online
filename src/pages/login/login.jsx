@@ -7,7 +7,6 @@ import { loginUser } from "../../api/authAPI/authAPI";
 
 const Login = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const { loading } = useSelector((store) => store.authSlice);
 
   const confirmLoginUser = async (e) => {
@@ -19,7 +18,6 @@ const Login = () => {
 
     try {
       const res = await dispatch(loginUser(loginRequestData)).unwrap();
-
       if (res?.token) {
         localStorage.setItem("token", res.token);
       }
