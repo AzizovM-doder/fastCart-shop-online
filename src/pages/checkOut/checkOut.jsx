@@ -70,10 +70,10 @@ const CheckOut = () => {
         },
       );
 
-      toast.success("ZAKAZ RAAAFT BRAT!");
+      toast.success("Checkout proceed!");
     } catch (error) {
       console.log("Error sending message:", error);
-      toast.error("CHI GAPE WID BRAT KAMTAR DER ZAKAZ K!!");
+      toast.error("Something went wrong, please try later(!!");
     }
   };
 
