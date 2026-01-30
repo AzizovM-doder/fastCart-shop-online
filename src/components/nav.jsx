@@ -229,11 +229,11 @@ const Nav = () => {
                   Logout
                 </MenuItem>
               </Menu>
+                <ModeToggle/>
             </div>
           </div>
         ) : null}
-              <ModeToggle />
-
+        {token.length < 10 ? <ModeToggle /> : null}
       </div>
     </nav>
   );
