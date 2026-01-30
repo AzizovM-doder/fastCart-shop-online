@@ -229,11 +229,23 @@ const Nav = () => {
                   Logout
                 </MenuItem>
               </Menu>
-                <ModeToggle/>
+              <ModeToggle />
             </div>
           </div>
         ) : null}
-        {token.length < 10 ? <ModeToggle /> : null}
+        {token.length < 10 ? (
+          <div className="flex gap-5 items-center flex-row-reverse">
+            <NavLink
+              className={({ isActive }) =>
+                isActive ? "text-red-500" : "text-black"
+              }
+              to={"wishlist"}
+            >
+              <Heart />
+            </NavLink>
+            <ModeToggle />
+          </div>
+        ) : null}
       </div>
     </nav>
   );
