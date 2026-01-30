@@ -26,6 +26,7 @@ import {
 } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { getCart } from "../api/cartAPI/cartAPI";
+import { ModeToggle } from "./mode-toggle";
 
 const Nav = () => {
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -174,7 +175,7 @@ const Nav = () => {
               >
                 <User />
               </button>
-
+              <ModeToggle />
               <Menu
                 anchorEl={anchorEl}
                 id="account-menu"
