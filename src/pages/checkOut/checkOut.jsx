@@ -70,10 +70,10 @@ const CheckOut = () => {
         },
       );
 
-      toast.success("GOOD JOB!");
+      toast.success("ZAKAZ RAAAFT BRAT!");
     } catch (error) {
       console.log("Error sending message:", error);
-      toast.error("BAD WORK!!");
+      toast.error("CHI GAPE WID BRAT KAMTAR DER ZAKAZ K!!");
     }
   };
 
