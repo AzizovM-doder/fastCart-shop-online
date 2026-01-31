@@ -18,7 +18,7 @@ const Card1 = ({ data, s, slc }) => {
     (state) => state.wishlist?.items || state.wishlistSlice?.items || [],
   );
   const token = localStorage.getItem("token");
-  console.log(token);
+  
   
   return (
     <div className="grid lg:grid-cols-4 gap-5">

@@ -26,8 +26,6 @@ export const getProduct = createAsyncThunk(
           error: "Something went wrong!",
         }
       );
-
-      console.log(res.data);
       return res.data.data;
     } catch (error) {
       console.log(error);
