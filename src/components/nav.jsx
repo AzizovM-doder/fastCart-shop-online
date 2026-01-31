@@ -5,16 +5,10 @@ import {
   Heart,
   LogOut,
   LucideShoppingCart,
-  SearchIcon,
-  Settings,
   ShoppingCartIcon,
   User,
 } from "lucide-react";
 import Badge from "@mui/material/Badge";
-import { Button } from "@/components/ui/button";
-
-import { ButtonGroup } from "@/components/ui/button-group";
-import { Input } from "@/components/ui/input";
 import Drawer_nav from "./drawer_nav";
 import {
   Divider,
@@ -221,6 +215,7 @@ const Nav = () => {
                   onClick={() => {
                     handleClose();
                     localStorage.removeItem("token");
+                    window.location = '/'
                   }}
                 >
                   <ListItemIcon>
@@ -234,10 +229,10 @@ const Nav = () => {
           </div>
         ) : null}
         {token.length < 10 ? (
-          <div className="flex gap-5 items-center flex-row-reverse">
+          <div className="flex gap-3 items-center">
             <NavLink
               className={({ isActive }) =>
-                isActive ? "text-red-500" : "text-black"
+                isActive ? "text-red-500" : ""
               }
               to={"wishlist"}
             >

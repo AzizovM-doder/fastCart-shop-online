@@ -20,8 +20,11 @@ import {
   LucideShoppingCart,
   User,
   LogIn,
+  LogOut,
 } from "lucide-react";
 import fastCartLogo from "../../public/fastCartLogo.png";
+import { ModeToggle } from "./mode-toggle";
+import { saveToken } from "../utils/url";
 
 const Drawer_nav = () => {
   return (
@@ -46,6 +49,7 @@ const Drawer_nav = () => {
 
           <nav className="px-3 pt-4">
             <div className="flex flex-col gap-2 **:flex-row   font-medium">
+              <ModeToggle/>
               <DrawerClose asChild>
                 <NavLink
                   to="/"
@@ -142,6 +146,21 @@ const Drawer_nav = () => {
                   <User size={20} />
                   <span>Account</span>
                 </NavLink>
+              </DrawerClose>
+              
+
+              <DrawerClose asChild>
+                <p
+                onClick={() =>{
+                  localStorage.removeItem("token")
+                  window.location = '/'
+                }}
+                    className={"flex text-red-600 items-center gap-3 rounded-md px-3 py-2 "}
+                
+                >
+                  <LogOut size={20} />
+                  <span>Log out</span>
+                </p>
               </DrawerClose>
             </div>
           </nav>
