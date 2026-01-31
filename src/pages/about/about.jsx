@@ -48,7 +48,7 @@ const perks = [
 const About = () => {
   return (
     <main className="min-h-screen bg-white text-gray-900">
-      <header className="border-b bg-gradient-to-b from-gray-50 to-white">
+      <header className="border-b from-gray-50 to-white">
         <section className="max-w-7xl mx-auto px-5 pt-6">
           <Breadcrumb className="-mr-10">
             <BreadcrumbList>
@@ -102,7 +102,7 @@ const About = () => {
             <div className="absolute -inset-6 rounded-[2rem] bg-gradient-to-tr from-[#DB4444]/20 via-transparent to-black/10 blur-2xl" />
             <div className="relative overflow-hidden rounded-[2rem] border bg-white shadow-lg">
               <img
-                className="w-full h-[320px] sm:h-[380px] object-cover"
+                className="w-full h-80 sm:h-95 object-fit"
                 src={client}
                 alt="Elite Market"
               />
@@ -162,7 +162,7 @@ const About = () => {
       </section>
 
       <section className="max-w-7xl mx-auto px-5 pb-12">
-        <div className="rounded-[2rem] border bg-gradient-to-b from-white to-gray-50 p-6 sm:p-10 shadow-sm">
+        <div className="rounded-[2rem] border from-white to-gray-50 p-6 sm:p-10 shadow-sm">
           <div className="flex flex-col gap-2">
             <h2 className="text-3xl font-extrabold">What makes Elite Market different</h2>
             <p className="text-gray-600 max-w-3xl">
@@ -255,7 +255,7 @@ const About = () => {
               </div>
               <h3 className="mt-4 font-extrabold tracking-wide">{p.title}</h3>
               <p className="mt-2 text-sm text-gray-600">{p.text}</p>
-              <div className="mt-6 h-[2px] w-full bg-gray-100" />
+              <div className="mt-6 h-1 w-full bg-gray-100" />
               <p className="mt-4 text-xs text-gray-500">
                 Elite Market • Premium service standard
               </p>
