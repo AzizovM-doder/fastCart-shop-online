@@ -1,5 +1,5 @@
 import React from "react";
-import client from "../../images/client.png";
+import client from "../../../public/fastCartLogo.png";
 import pers1 from "../../images/pers1.png";
 import pers2 from "../../images/pers2.png";
 import pers3 from "../../images/pers3.png";
