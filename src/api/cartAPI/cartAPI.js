@@ -1,10 +1,9 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { axiosRequest } from "../../utils/url";
 import toast from "react-hot-toast";
-
-export const getCart = createAsyncThunk(
-  "cartSlice/getCart",
-  async () => {
+const token = localStorage.getItem("token") || "";
+export const getCart = createAsyncThunk("cartSlice/getCart", async () => {
+  if (token.length > 10) {
     try {
       const req = axiosRequest("Cart/get-products-from-cart");
 
@@ -20,7 +19,7 @@ export const getCart = createAsyncThunk(
       throw error;
     }
   }
-);
+});
 
 export const postToCart = createAsyncThunk(
   "cartSlice/postToCart",
@@ -39,16 +38,14 @@ export const postToCart = createAsyncThunk(
       console.error(error);
       throw error;
     }
-  }
+  },
 );
 
 export const putIncreaseCart = createAsyncThunk(
   "cartSlice/putIncreaseCart",
   async (id, { dispatch }) => {
     try {
-      const req = axiosRequest.put(
-        `Cart/increase-product-in-cart?id=${id}`
-      );
+      const req = axiosRequest.put(`Cart/increase-product-in-cart?id=${id}`);
 
       await toast.promise(req, {
         loading: "Increasing quantity...",
@@ -61,16 +58,14 @@ export const putIncreaseCart = createAsyncThunk(
       console.error(error);
       throw error;
     }
-  }
+  },
 );
 
 export const putReduceCart = createAsyncThunk(
   "cartSlice/putReduceCart",
   async (id, { dispatch }) => {
     try {
-      const req = axiosRequest.put(
-        `Cart/reduce-product-in-cart?id=${id}`
-      );
+      const req = axiosRequest.put(`Cart/reduce-product-in-cart?id=${id}`);
 
       await toast.promise(req, {
         loading: "Reducing quantity...",
@@ -83,16 +78,14 @@ export const putReduceCart = createAsyncThunk(
       console.error(error);
       throw error;
     }
-  }
+  },
 );
 
 export const deleteProductInCart = createAsyncThunk(
   "cartSlice/deleteProductInCart",
   async (id, { dispatch }) => {
     try {
-      const req = axiosRequest.delete(
-        `Cart/delete-product-from-cart?id=${id}`
-      );
+      const req = axiosRequest.delete(`Cart/delete-product-from-cart?id=${id}`);
 
       await toast.promise(req, {
         loading: "Removing product...",
@@ -105,7 +98,7 @@ export const deleteProductInCart = createAsyncThunk(
       console.error(error);
       throw error;
     }
-  }
+  },
 );
 
 export const deleteAllProductInCart = createAsyncThunk(
@@ -125,5 +118,5 @@ export const deleteAllProductInCart = createAsyncThunk(
       console.error(error);
       throw error;
     }
-  }
+  },
 );
