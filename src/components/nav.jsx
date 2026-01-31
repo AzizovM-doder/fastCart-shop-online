@@ -31,7 +31,7 @@ const Nav = () => {
 
   // const {totalProducts} = cart?.at(0)
   // console.log(totalProducts);
-  const token = localStorage.getItem("token") || [];
+  const token = localStorage.getItem("token") || "";
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -56,38 +56,23 @@ const Nav = () => {
     <nav className="backdrop-blur-lg shadow fixed top-0 left-0 right-0 z-50 bg-white/30">
       <div className="max-w-7xl flex m-auto p-5 justify-between items-center">
         <div className="flex justify-between w-full lg:w-auto items-center">
-          <div className="lg:hidden">
+          <div className="lg:hidden min-w-1/3">
             <Drawer_nav />
           </div>
           <Link to={"/"}>
-            <img src={fastCartLogo} className={"w-20"} alt="logo" />
+            <img src={fastCartLogo} className={"min-w-1/3 lg:max-w-20 pr-2"} alt="logo" />
           </Link>
-          <div className="flex gap-3 items-center lg:hidden">
-            <NavLink
-              className={({ isActive }) =>
-                isActive ? "text-red-500" : "text-black"
-              }
-              to={"wishlist"}
-            >
-              <Heart width={20} />
-            </NavLink>
-            <NavLink
-              className={({ isActive }) =>
-                isActive ? "text-yellow-500" : "text-black"
-              }
-              to={"cart"}
-            >
-              <LucideShoppingCart width={20} />
-            </NavLink>
-            <NavLink
-              className={({ isActive }) =>
-                isActive ? "text-blue-500" : "text-black"
-              }
-              to={"account"}
-            >
-              <User width={20} />
-            </NavLink>
-          </div>
+          {token.length < 10 ? (
+            <div className="flex min-w-1/3 lg:hidden justify-end gap-3 items-center">
+              <NavLink
+                className={({ isActive }) => (isActive ? "text-red-500" : "")}
+                to={"wishlist"}
+              >
+                <Heart className="dark:text-white" />
+              </NavLink>
+              <ModeToggle />
+            </div>
+          ) : null}
         </div>
 
         <ul className="lg:flex gap-5 items-center hidden *:border-b-2 *:py-1">
@@ -137,7 +122,7 @@ const Nav = () => {
           ) : null}
         </ul>
 
-        {token.length > 1 ? (
+        {token?.length > 1 ? (
           <div className="hidden lg:flex items-center gap-10">
             <div className="flex gap-5 items-center">
               <NavLink
@@ -167,7 +152,7 @@ const Nav = () => {
                 aria-haspopup="true"
                 aria-expanded={open ? "true" : undefined}
               >
-                <User className="text-black dark:text-white"  />
+                <User className="text-black dark:text-white" />
               </button>
               <Menu
                 anchorEl={anchorEl}
@@ -230,17 +215,6 @@ const Nav = () => {
               </Menu>
               <ModeToggle />
             </div>
-          </div>
-        ) : null}
-        {token.length < 10 ? (
-          <div className="flex gap-3 items-center">
-            <NavLink
-              className={({ isActive }) => (isActive ? "text-red-500" : "")}
-              to={"wishlist"}
-            >
-              <Heart className="dark:text-white" />
-            </NavLink>
-            <ModeToggle />
           </div>
         ) : null}
       </div>

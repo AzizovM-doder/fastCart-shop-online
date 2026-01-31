@@ -18,8 +18,7 @@ const Card1 = ({ data, s, slc }) => {
     (state) => state.wishlist?.items || state.wishlistSlice?.items || [],
   );
   const token = localStorage.getItem("token");
-  
-  
+
   return (
     <div className="grid lg:grid-cols-4 gap-5">
       {data?.slice(s || 0, slc || data.length).map((e) => {
@@ -55,11 +54,17 @@ const Card1 = ({ data, s, slc }) => {
                     />
                   </Link>
                   <div className="lg:hidden">
-                    <Checkbox
-                      icon={<ShoppingCart style={{ color: "white" }} />}
-                      checkedIcon={<ShoppingCart style={{ color: "blue" }} />}
-                      sx={{ padding: 0 }}
-                    />
+                    <button
+                      onClick={() => {
+                        if (token) {
+                          dispatch(postToCart(e.id));
+                        } else {
+                          navigate("/signUp");
+                        }
+                      }}
+                    >
+                      <ShoppingCart />
+                    </button>
                   </div>
                 </div>
               </div>
@@ -70,9 +75,8 @@ const Card1 = ({ data, s, slc }) => {
                 onClick={() => {
                   if (token) {
                     dispatch(postToCart(e.id));
-                  }
-                  else{
-                    navigate('/signUp')
+                  } else {
+                    navigate("/signUp");
                   }
                 }}
                 className="absolute bottom-0 left-0 w-full py-3 flex items-center justify-center bg-black text-white opacity-0 translate-y-3 transition-all duration-300 group-hover:opacity-100 group-hover:translate-y-0"

@@ -30,8 +30,8 @@ const Home = () => {
   return (
     <main>
       <header>
-        <section className="max-w-7xl m-auto lg:p-5 flex flex-col gap-5 lg:flex-row lg:justify-between">
-          <aside className="flex flex-wrap lg:w-1/6 gap-2 p-5 lg:p-0 lg:gap-5 lg:flex-nowrap lg:flex-col">
+        <section className="max-w-7xl m-auto lg:p-5 flex flex-col-reverse gap-5 lg:flex-row lg:justify-between">
+          <aside className="grid lg:grid-cols-1 grid-cols-2 lg:w-1/6 gap-2 p-5 lg:p-0 lg:gap-5 lg:flex-nowrap lg:flex-col">
             {category?.map((e) => {
               return (
                 <NavigationMenu key={e.id}>
