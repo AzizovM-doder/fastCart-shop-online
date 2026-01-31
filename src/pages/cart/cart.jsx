@@ -24,9 +24,9 @@ const Cart = () => {
   if (!cartData || !cartData.productsInCart?.length) {
     return (
       <div className="max-w-7xl mx-auto px-4 py-20">
-        <div className="flex flex-col items-center text-center gap-6 border rounded-2xl p-12 bg-white shadow-sm">
+        <div className="flex flex-col items-center text-center gap-6 border rounded-2xl p-15 py-40 shadow-sm">
           <div className="w-24 h-24 rounded-full bg-gray-100 flex items-center justify-center">
-            <ShoppingCart size={40} className="opacity-70" />
+            <ShoppingCart size={40} className="dark:text-black opacity-70" />
           </div>
 
           <div className="space-y-2">
@@ -38,7 +38,7 @@ const Cart = () => {
           </div>
 
           <Link to="/products">
-            <button className="px-6 py-3 rounded-xl bg-black text-white hover:bg-black/90 transition">
+            <button className="px-6 py-3 rounded-xl bg-black dark:bg-white dark:text-black text-white hover:bg-black/90 transition">
               Browse products
             </button>
           </Link>

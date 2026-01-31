@@ -146,7 +146,7 @@ const Nav = () => {
                 }
                 to={"wishlist"}
               >
-                <Heart />
+                <Heart className="text-black dark:text-white" />
               </NavLink>
               <NavLink
                 className={({ isActive }) =>
@@ -156,7 +156,7 @@ const Nav = () => {
               >
                 <IconButton aria-label="cart">
                   <StyledBadge badgeContent={totalProducts} color="secondary">
-                    <ShoppingCartIcon />
+                    <ShoppingCartIcon className="text-black dark:text-white" />
                   </StyledBadge>
                 </IconButton>
               </NavLink>
@@ -167,7 +167,7 @@ const Nav = () => {
                 aria-haspopup="true"
                 aria-expanded={open ? "true" : undefined}
               >
-                <User />
+                <User className="text-black dark:text-white"  />
               </button>
               <Menu
                 anchorEl={anchorEl}
@@ -208,18 +208,22 @@ const Nav = () => {
               >
                 <Link to={"/account"}>
                   <MenuItem onClick={handleClose}>
-                    <User /> Account
+                    <ListItemIcon>
+                      <User className="text-black" />
+                    </ListItemIcon>
+                    Account
                   </MenuItem>
                 </Link>
                 <MenuItem
+                  className="text-red-500"
                   onClick={() => {
                     handleClose();
                     localStorage.removeItem("token");
-                    window.location = '/'
+                    window.location = "/";
                   }}
                 >
                   <ListItemIcon>
-                    <LogOut />
+                    <LogOut className="dark:text-red-500" />
                   </ListItemIcon>
                   Logout
                 </MenuItem>
@@ -231,12 +235,10 @@ const Nav = () => {
         {token.length < 10 ? (
           <div className="flex gap-3 items-center">
             <NavLink
-              className={({ isActive }) =>
-                isActive ? "text-red-500" : ""
-              }
+              className={({ isActive }) => (isActive ? "text-red-500" : "")}
               to={"wishlist"}
             >
-              <Heart />
+              <Heart className="dark:text-white" />
             </NavLink>
             <ModeToggle />
           </div>
