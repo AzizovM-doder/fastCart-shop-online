@@ -73,6 +73,81 @@ const Nav = () => {
               <ModeToggle />
             </div>
           ) : null}
+             {token?.length > 1 ? (
+          <div className="flex min-w-1/3 justify-end lg:hidden items-center gap-10">
+            <div className="flex gap-3 items-center">
+              <button
+                onClick={handleClick}
+                className="rounded-full p-1 hover:bg-gray-100 focus:outline-none"
+                aria-controls={open ? "account-menu" : undefined}
+                aria-haspopup="true"
+                aria-expanded={open ? "true" : undefined}
+              >
+                <User className="text-black dark:text-white" />
+              </button>
+              <Menu
+                anchorEl={anchorEl}
+                id="account-menu"
+                open={open}
+                onClose={handleClose}
+                onClick={handleClose}
+                slotProps={{
+                  paper: {
+                    elevation: 0,
+                    sx: {
+                      overflow: "visible",
+                      filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
+                      mt: 1.5,
+                      "& .MuiAvatar-root": {
+                        width: 32,
+                        height: 32,
+                        ml: -0.5,
+                        mr: 1,
+                      },
+                      "&::before": {
+                        content: '""',
+                        display: "block",
+                        position: "absolute",
+                        top: 0,
+                        right: 14,
+                        width: 10,
+                        height: 10,
+                        bgcolor: "background.paper",
+                        transform: "translateY(-50%) rotate(45deg)",
+                        zIndex: 0,
+                      },
+                    },
+                  },
+                }}
+                transformOrigin={{ horizontal: "right", vertical: "top" }}
+                anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
+              >
+                <Link to={"/account"}>
+                  <MenuItem onClick={handleClose}>
+                    <ListItemIcon>
+                      <User className="text-black" />
+                    </ListItemIcon>
+                    Account
+                  </MenuItem>
+                </Link>
+                <MenuItem
+                  className="text-red-500"
+                  onClick={() => {
+                    handleClose();
+                    localStorage.removeItem("token");
+                    window.location = "/";
+                  }}
+                >
+                  <ListItemIcon>
+                    <LogOut className="dark:text-red-500" />
+                  </ListItemIcon>
+                  Logout
+                </MenuItem>
+              </Menu>
+              <ModeToggle />
+            </div>
+          </div>
+        ) : null}
         </div>
 
         <ul className="lg:flex gap-5 items-center hidden *:border-b-2 *:py-1">

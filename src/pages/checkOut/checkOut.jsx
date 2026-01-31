@@ -73,7 +73,7 @@ const CheckOut = () => {
       toast.success("Checkout proceed!");
     } catch (error) {
       console.log("Error sending message:", error);
-      toast.error("Something went wrong, please try later(!!");
+      toast.error("Something went wrong, please try later :(");
     }
   };
 

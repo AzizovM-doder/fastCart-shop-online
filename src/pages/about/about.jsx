@@ -50,7 +50,7 @@ const About = () => {
     <main>
       <header className="border-b from-gray-50 to-white">
         <section className="max-w-7xl mx-auto px-5 pt-6">
-          <Breadcrumb className="-mr-10">
+          <Breadcrumb className="-mr-10 max-w-full">
             <BreadcrumbList>
               <BreadcrumbItem>
                 <BreadcrumbLink href="/">Home</BreadcrumbLink>

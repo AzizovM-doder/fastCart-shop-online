@@ -8,7 +8,7 @@ import { ThemeProvider } from "./components/theme-provider.jsx";
 
 createRoot(document.getElementById("root")).render(
   <Provider store={store}>
-      <ThemeProvider defaultTheme="dark">
+      <ThemeProvider>
         <App />
       </ThemeProvider>
   </Provider>,

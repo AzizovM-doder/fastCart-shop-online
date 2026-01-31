@@ -47,7 +47,7 @@ const Details = () => {
   const activeImage = images?.[activeIndex]?.images;
 
   return (
-    <main className="min-h-110 py-10 from-slate-50 to-white">
+    <main className="min-h-screen py-10 from-slate-50 to-white">
       <section className="max-w-6xl mx-auto px-4 lg:px-6 pt-8 lg:pt-12 pb-16 space-y-8">
         <Breadcrumb>
           <BreadcrumbList>

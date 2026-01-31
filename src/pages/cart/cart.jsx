@@ -70,7 +70,7 @@ const Cart = () => {
   };
 
   return (
-    <div className="max-w-7xl lg:min-h-screen m-auto px-4 py-8">
+    <div className="max-w-7xl min-h-screen m-auto px-4 py-8">
       <h1 className="text-2xl font-semibold mb-6">Shopping Cart</h1>
 
       <div className="flex flex-col lg:flex-row gap-8">
@@ -78,7 +78,7 @@ const Cart = () => {
           {productsInCart.map((e) => (
             <div
               key={e.id}
-              className="flex gap-4 border rounded-xl p-4 bg-white shadow-sm hover:shadow-md transition"
+              className="flex gap-4 border rounded-xl p-4 shadow-sm hover:shadow-md transition"
             >
               {e.product.image ? (
                 <img
@@ -146,7 +146,7 @@ const Cart = () => {
           ))}
         </div>
 
-        <aside className="w-full lg:w-80 border rounded-xl p-5 bg-gray-50 space-y-4 h-fit">
+        <aside className="w-full lg:w-80 border rounded-xl p-5  space-y-4 h-fit">
           <h2 className="text-lg font-semibold mb-2">Order Summary</h2>
 
           <div className="flex items-center justify-between text-sm">
