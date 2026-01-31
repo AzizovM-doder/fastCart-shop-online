@@ -101,7 +101,7 @@ const CheckOut = () => {
         onSubmit={onSubmit}
         className="max-w-7xl mx-auto px-4 lg:px-6 py-10 grid gap-8 lg:grid-cols-[3fr_2fr]"
       >
-        <aside className="bg-white border border-slate-100 shadow-sm rounded-2xl p-6 space-y-4">
+        <aside className=" border border-slate-100 shadow-sm rounded-2xl p-6 space-y-4">
           <h1 className="text-2xl font-semibold">Billing Details</h1>
 
           <Input name="firstName" placeholder="First name" required />
@@ -119,7 +119,7 @@ const CheckOut = () => {
           </div>
         </aside>
 
-        <aside className="bg-white border border-slate-100 shadow-sm rounded-2xl p-6 space-y-6 h-fit">
+        <aside className="border border-slate-100 shadow-sm rounded-2xl p-6 space-y-6 h-fit">
           <div className="flex justify-between items-center">
             <h2 className="text-lg font-semibold">Order Summary</h2>
             <span className="text-xs text-slate-500">
