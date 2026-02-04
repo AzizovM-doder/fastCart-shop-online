@@ -34,6 +34,8 @@ const Details = () => {
     (state) => state.wishlist?.items || state.wishlistSlice?.items || [],
   );
 
+  const token = localStorage.getItem("token") || ''
+
   const checked = wishlist.some((elem) => elem.id === user?.id);
 
   useEffect(() => {
@@ -169,7 +171,16 @@ const Details = () => {
             <div className="border-t border-slate-100 pt-4 space-y-4">
               <div className="flex gap-3 pt-2">
                 <Button
-                  onClick={() => dispatch(postToCart(id))}
+                  onClick={() => {
+                    if (token.length > 10) {
+                      dispatch(postToCart(id));
+                    } else {
+                      navigate("/login");
+                    }
+                    localStorage.getItem("token").length || "".length > 10
+                      ? dispatch(addToWishlist(user))
+                      : navigate("/login");
+                  }}
                   className="flex-1 py-3 flex justify-center gap-3"
                   variant="destructive"
                   size="lg"
@@ -183,7 +194,9 @@ const Details = () => {
                   checkedIcon={<Favorite style={{ color: "red" }} />}
                   checked={checked}
                   onClick={() => {
-                    localStorage.getItem("token").length || ''.length > 10 ? dispatch(addToWishlist(user)) : navigate("/login")
+                    localStorage.getItem("token").length || "".length > 10
+                      ? dispatch(addToWishlist(user))
+                      : navigate("/login");
                   }}
                 />
               </div>
