@@ -123,6 +123,7 @@
 }
 *{
   transition: all .3s ease;
+  scrollbar-width: none;
 }
 button{
   cursor: pointer;

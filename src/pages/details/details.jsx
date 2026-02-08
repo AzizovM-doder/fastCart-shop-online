@@ -34,7 +34,7 @@ const Details = () => {
     (state) => state.wishlist?.items || state.wishlistSlice?.items || [],
   );
 
-  const token = localStorage.getItem("token") || ''
+  const token = localStorage.getItem("token") || "";
 
   const checked = wishlist.some((elem) => elem.id === user?.id);
 
@@ -194,9 +194,14 @@ const Details = () => {
                   checkedIcon={<Favorite style={{ color: "red" }} />}
                   checked={checked}
                   onClick={() => {
-                    localStorage.getItem("token").length || "".length > 10
-                      ? dispatch(addToWishlist(user))
-                      : navigate("/login");
+                    if (
+                      localStorage.getItem("token")?.length > 10 ||
+                      "".length > 10
+                    ) {
+                      dispatch(addToWishlist(user));
+                    } else {
+                      navigate("/login");
+                    }
                   }}
                 />
               </div>
